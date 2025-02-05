@@ -25,39 +25,42 @@ int main(){
         // cout << "Vardas: ";   cin >> laikinas.vardas;
         // cout << "Pavarde: ";  cin >> laikinas.pavarde;
 
-//------------------------------- Pazymiu ivedimas --------------------------------------------------------------------------------------------
+                            // --- Pazymiu ivedimas --- 
         float ivertinimas;
-        int j = 0;
+        int j = 0;  // Seka ivestu pazymiu skaiciu
         cout << "Pazymiu ivedimas... -1 - norint nutraukti" << endl;
         while(true){
-            cout << j+1 << " pazymys: "; cin >> ivertinimas; j++;
-            if(ivertinimas == -1){ break; }
-            laikinas.pazymiai.push_back(ivertinimas);
-        
+            cout << j+1 << " pazymys: "; cin >> ivertinimas; 
 
+            if(ivertinimas == -1){ break; }  //nutraukimas
+            else if (ivertinimas < 0 || ivertinimas > 10){ cout << "Ivertinimo ribos nuo 1 iki 10" << endl; continue; } // Salygos netenkinimas
+            else{ 
+                j++;
+                laikinas.pazymiai.push_back(ivertinimas);
+            }
        }
 
-//------------------------------- Vidurkio skaiciavimas ----------------------------------------------------------------------------------------
-       for(auto s : laikinas.pazymiai){
-         sum += s;
-       } 
-       float vidurkis; //Pazymiu vidurkis
-       vidurkis = sum/laikinas.pazymiai.size();
+        // --- Vidurkio ir medianos skaiciavimas  --- 
+        float vidurkis = 0;
+        float mediana = 0; 
+        
+        if(laikinas.pazymiai.size() != 0 ){ // Jei yra bent vienas ivertinimas apskaiciuoja mediana/vidurki 
+            for(auto s : laikinas.pazymiai){
+                sum += s;
+            }   
+            vidurkis = sum/laikinas.pazymiai.size();
 
-//------------------------------- Rikiavimas nuo maziausio iki didziausio ir medianos skaiciavimas ----------------------------------------------
-        sort(laikinas.pazymiai.begin(), laikinas.pazymiai.end());
+            sort(laikinas.pazymiai.begin(), laikinas.pazymiai.end()); // Duomenu issirikiavimas didejimo tvarka
 
-        float mediana;
-        int pazymiu_kiekis = laikinas.pazymiai.size();
-        if(pazymiu_kiekis % 2 == 1){ //Jei skaicius nelyginis
-            mediana = laikinas.pazymiai[pazymiu_kiekis / 2];//Pradedama nuo 0 skaiciuoti
-        } 
+            int pazymiu_kiekis = laikinas.pazymiai.size();
+            if(pazymiu_kiekis % 2 == 1){ // Jei skaicius nelyginis
+                mediana = laikinas.pazymiai[pazymiu_kiekis / 2];//Pradedama nuo 0 skaiciuoti
+                } 
 
-        else{
-            mediana = (laikinas.pazymiai[pazymiu_kiekis/2] + laikinas.pazymiai[pazymiu_kiekis/2 - 1 ]) / 2.0;
-        }
+            else{ mediana = (laikinas.pazymiai[pazymiu_kiekis/2] + laikinas.pazymiai[pazymiu_kiekis/2 - 1 ]) / 2.0;} // Jei skaicius lyginis
+            } 
+        else { cout << "Pazymiu nera... " << endl;}
 
-//-----------------------------------------------------------------------------------------------------------------------------------------------
         cout << "Egzamino rezultatas: "; cin >> laikinas.egzaminoRezultatas;
 
         laikinas.galutinisVid = vidurkis * 0.4 + laikinas.egzaminoRezultatas *0.6;
@@ -69,9 +72,7 @@ int main(){
         if(choice == 'n'){ break; }
     }
 
-    //---------------------
-    //Spausdinimas
-
+    // --- Spausdinimas --- 
     cout << left << setw(12) << "Pavarde" 
         << setw(12) << "Vardas" 
         << setw(15) << "Galutinis (Vid.)  /  " 
