@@ -2,6 +2,8 @@
 #include <vector>
 #include <iomanip>
 #include <algorithm>
+#include <random>
+
 
 using std::string;
 using std::cout;
