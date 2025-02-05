@@ -16,14 +16,8 @@ int main(){
 
     vector<Studentas> studentas;
 
-    int n, m; // n - pazymiu skaicius
-              // m - studentu skaicius
-    
-    m = 2;
-    n = 3;
-
     Studentas laikinas;
-    for(int i=0; i < m; i++){
+    while(true){ 
 
         laikinas.pazymiai.clear();
         float sum = 0;
@@ -33,9 +27,14 @@ int main(){
 
 //------------------------------- Pazymiu ivedimas --------------------------------------------------------------------------------------------
         float ivertinimas;
-        for(int j=0; j < n; j++){
-            cout << j+1 << " pazymys: "; cin >> ivertinimas;
+        int j = 0;
+        cout << "Pazymiu ivedimas... -1 - norint nutraukti" << endl;
+        while(true){
+            cout << j+1 << " pazymys: "; cin >> ivertinimas; j++;
+            if(ivertinimas == -1){ break; }
             laikinas.pazymiai.push_back(ivertinimas);
+        
+
        }
 
 //------------------------------- Vidurkio skaiciavimas ----------------------------------------------------------------------------------------
@@ -43,12 +42,12 @@ int main(){
          sum += s;
        } 
        float vidurkis; //Pazymiu vidurkis
-       vidurkis = sum/n;
+       vidurkis = sum/laikinas.pazymiai.size();
 
 //------------------------------- Rikiavimas nuo maziausio iki didziausio ir medianos skaiciavimas ----------------------------------------------
         sort(laikinas.pazymiai.begin(), laikinas.pazymiai.end());
 
-        int mediana;
+        float mediana;
         int pazymiu_kiekis = laikinas.pazymiai.size();
         if(pazymiu_kiekis % 2 == 1){ //Jei skaicius nelyginis
             mediana = laikinas.pazymiai[pazymiu_kiekis / 2];//Pradedama nuo 0 skaiciuoti
@@ -65,6 +64,9 @@ int main(){
         laikinas.galutinisMed = mediana * 0.4 + laikinas.egzaminoRezultatas *0.6;
 
         studentas.push_back(laikinas);
+        char choice;
+        cout << "Ivestini kita studenta? y/n "; cin >>  choice;
+        if(choice == 'n'){ break; }
     }
 
     //---------------------
