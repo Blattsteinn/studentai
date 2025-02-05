@@ -12,6 +12,14 @@ struct Studentas{
     float galutinisMed;
 };
 
+int randomNumber() {
+    std::random_device rd;  //Seed
+    std::mt19937 gen(rd()); //Mersenne Twister engine
+    std::uniform_int_distribution<int> distr(0, 10);
+    
+    return distr(gen);
+}
+
 int main(){
 
     vector<Studentas> studentas;
@@ -32,7 +40,9 @@ int main(){
         while(true){
             cout << j+1 << " pazymys: "; cin >> ivertinimas; 
 
-            if(ivertinimas == -1){ break; }  //nutraukimas
+            ivertinimas = randomNumber(); cout << ivertinimas << endl; cin >> a;
+
+            if(a == -1){ break; }  //nutraukimas
             else if (ivertinimas < 0 || ivertinimas > 10){ cout << "Ivertinimo ribos nuo 1 iki 10" << endl; continue; } // Salygos netenkinimas
             else{ 
                 j++;
