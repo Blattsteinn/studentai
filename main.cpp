@@ -1,43 +1,10 @@
 #include "mano_lib.h"
 
-struct Studentas{
 
-    string vardas = "A"; //Laikinas
-    string pavarde = "B";
-
-    vector<float> pazymiai;
-    int egzaminoRezultatas;
-
-    float galutinisVid;
-    float galutinisMed;
-};
-
-int randomNumber() {
-    std::random_device rd;  //Seed
-    std::mt19937 gen(rd()); //Mersenne Twister engine
-    std::uniform_int_distribution<int> distr(0, 10);
-    
+int randomNumber(int a, int b) {
+    static std::mt19937 gen{std::random_device{}()}; // paleidziama tik karta
+    std::uniform_int_distribution<int> distr(a, b);
     return distr(gen);
-}
-
-vector<float> ivestiPazymius(){
-    Studentas laikinas;
-
-    float ivertinimas;
-    int j = 0;  // Seka ivestu pazymiu skaiciu
-    cout << "Pazymiu ivedimas... -1 - norint nutraukti" << endl;
-        while(true){
-            cout << j+1 << " pazymys: "; cin >> ivertinimas; 
-
-            if(ivertinimas == -1){ break; }  //nutraukimas
-            else if (ivertinimas < 0 || ivertinimas > 10){ cout << "!! Ivertinimo ribos nuo 1 iki 10" << endl; continue; } // Salygos netenkinimas
-            else{ 
-                j++;
-                laikinas.pazymiai.push_back(ivertinimas);
-            }
-       }
-
-    return laikinas.pazymiai;
 }
 
 vector<float> atsitiktinisPazymiai(){
@@ -48,10 +15,10 @@ vector<float> atsitiktinisPazymiai(){
 
     while(true){
         cout << "Generuoti pazymi? y/n: "; cin >> testiGeneravima;
-        if(testiGeneravima != 'n'){ 
-            int atsitiktinisPazymys = randomNumber();
+        if(testiGeneravima != 'n' && testiGeneravima != 'N'){ 
+            int atsitiktinisPazymys = randomNumber(1, 10);
             laikinas.pazymiai.push_back(atsitiktinisPazymys);
-            cout << pazymiuSekimas << " pazymys: "  << atsitiktinisPazymys << endl; pazymiuSekimas++;
+            cout << pazymiuSekimas << "pazymys: "  << atsitiktinisPazymys << endl; pazymiuSekimas++;
             }
         else{
             break; 
@@ -61,60 +28,113 @@ vector<float> atsitiktinisPazymiai(){
     return laikinas.pazymiai;
 }
 
+string atsitiktinisVardas() {
+    vector<string> vardai = {"John", "Alice", "Michael", "Emily", "David", "Sophia"};
+
+    return vardai[randomNumber(0, vardai.size()-1)];
+}
+
+string atsitiktinePavarde() {
+    vector<string> pavardes = {"Smith", "Johnson", "Brown", "Williams", "Jones", "Miller"};
+
+    return pavardes[randomNumber(0, pavardes.size()-1)];
+}
+
+int reiksmesTikrinimas(string zinute, string klaidosZinute,int minVal,int maxVal){
+    while (true)
+    {
+        cout << zinute;
+        int value;
+        if (!(cin >> value))
+        {
+            cout << klaidosZinute << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+        if (value < minVal || value > maxVal) //Tikrinama ar atitinka rezius
+        {
+            cout << klaidosZinute << endl;
+            continue;
+        }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return value;//Jei skaicius tenkina salyga, jis - grazinamas
+    }
+}
+
+vector<float> ivestiPazymius(){
+    Studentas laikinas;
+
+    float ivertinimas;
+    int pazymiuSekimas = 1;  //Seka kiek vartotojas ivede pazymiu
+
+    cout << "[Pazymiu ivedimas] ivedant -1 nutraukiamas darbas" << endl;
+        while(true){
+            string tekstas = std::to_string(pazymiuSekimas) + " pazymys: ";
+            
+            ivertinimas = reiksmesTikrinimas(tekstas, "[Klaida] ivertinimo ribos nuo 1 iki 10", -1, 10);
+
+            if(ivertinimas == -1){ break; }  //nutraukimas
+            else if (ivertinimas == 0 ){ cout << "[Klaida] ivertinimo ribos nuo 1 iki 10" << endl; continue; }
+
+            pazymiuSekimas++;
+            laikinas.pazymiai.push_back(ivertinimas);
+
+            }
+
+    return laikinas.pazymiai;
+}
+
+
 int main(){
 
     vector<Studentas> studentas;
 
     Studentas laikinas;
 
-    int pasirinkimas;
-    bool programa;
-    while(programa){ 
+    int pasirinkimas{};
+    while(true){ 
         
-        cout << "Programos eigos pasirinkimas (1 - ranka, 2 - generuoti pazymius, 3 - generuoti ir pazymius ir studentu vardus, pavardes, 4 - baigti darba): ";
-        cin >> pasirinkimas;
+        string pradzios_tekstas = "[Pasirinkimas] programos eiga (1 - ranka, 2 - generuoti pazymius, 3 - generuoti ir pazymius ir studentu vardus, pavardes, 4 - baigti darba): ";
+        pasirinkimas = reiksmesTikrinimas(pradzios_tekstas, "[Klaida] iveskite skaiciu nuo 1-10", 1, 4);
 
         laikinas.pazymiai.clear();
-        float sum = 0;
-        int pazymiuSekimas = 0;
 
+        if(pasirinkimas == 4) { break; } // Nutraukiamas programos darbas
         switch(pasirinkimas){
             case 1:   // 1 - ivedimas rankas
-                //cout << "Vardas: ";   cin >> laikinas.vardas;
-                //cout << "Pavarde: ";  cin >> laikinas.pavarde;
+                cout << "Vardas: ";   cin >> laikinas.vardas;
+                cout << "Pavarde: ";  cin >> laikinas.pavarde;
 
                     // --- Rankinis pazymiu ivedimas --- 
                 laikinas.pazymiai = ivestiPazymius();
+                laikinas.egzaminoRezultatas = reiksmesTikrinimas("Egzamino ivertinimas: ", "[Klaida] iveskite skaiciu nuo 1-10", 1, 10);
                 break;
 
             case 2:   // 2 - atsitiktinis pazymiu generavimas
-                //cout << "Vardas: ";   cin >> laikinas.vardas;
-                //cout << "Pavarde: ";  cin >> laikinas.pavarde;
+                cout << "Vardas: ";   cin >> laikinas.vardas;
+                cout << "Pavarde: ";  cin >> laikinas.pavarde;
 
                     // --- Atsitiktinis pazymiu ivedimas --- 
                 laikinas.pazymiai = atsitiktinisPazymiai();
+                laikinas.egzaminoRezultatas = randomNumber(1, 10); cout << "Egzamino rezultatas: " << laikinas.egzaminoRezultatas << endl;
                 break;
 
             case 3:   // 3 - generuoti ir pazymius ir studentu vardus, pavardes
-
-
+                laikinas.vardas = atsitiktinisVardas();  cout << "Sugeneruotas vardas: " << laikinas.vardas << endl;
+                laikinas.pavarde = atsitiktinePavarde(); cout << "Sugeneruota pavarde: " << laikinas.pavarde << endl;
                 laikinas.pazymiai = atsitiktinisPazymiai();
-                break;
-
-            case 4:
-                programa = false; // Nutraukiamas programos darbas
+                laikinas.egzaminoRezultatas = randomNumber(1, 10); cout << "Egzamino rezultatas: " << laikinas.egzaminoRezultatas << endl;
                 break;
 
             default:
-                cout << "Neteisingas pasirinkimas.. " << endl;
-                cout << "Programos eigos pasirinkimas (1 - ranka, 2 - generuoti pazymius, 3 - generuoti ir pazymius ir studentu vardus, pavardes, 4 - baigti darba): ";
-                cin >> pasirinkimas;
+                // programa neturetu pasiekti sios dalies
             break;
         }
 
 
-
         // --- Vidurkio ir medianos skaiciavimas  --- 
+        float sum = 0;
         float vidurkis = 0;
         float mediana = 0; 
         
@@ -135,16 +155,14 @@ int main(){
             } 
         else { cout << "Pazymiu nera... namu darbu tarpiniai rezultatai = 0" << endl;}
 
-        cout << "Egzamino rezultatas: "; cin >> laikinas.egzaminoRezultatas;
-
         laikinas.galutinisVid = vidurkis * 0.4 + laikinas.egzaminoRezultatas *0.6;
         laikinas.galutinisMed = mediana * 0.4 + laikinas.egzaminoRezultatas *0.6;
 
         studentas.push_back(laikinas);
 
         char choice;
-        cout << "Ivestini kita studenta? y/n "; cin >>  choice;
-        if(choice == 'n'){ break; }
+        cout << "Ivestini kita studenta? y/n: "; cin >>  choice;
+        if(choice == 'n' || choice == 'N'){ break; }
     }
 
     // --- Spausdinimas --- 
