@@ -54,6 +54,20 @@ int main() {
        } 
        float vidurkis; //Pazymiu vidurkis
        vidurkis = sum/n;
+       
+//------------------------------- Rikiavimas nuo maziausio iki didziausio ir medianos skaiciavimas ----------------------------------------------
+sort(laikinas.pazymiai.begin(), laikinas.pazymiai.end());
+
+int mediana;
+int pazymiu_kiekis = laikinas.pazymiai.size();
+if(pazymiu_kiekis % 2 == 1){ //Jei skaicius nelyginis
+    mediana = laikinas.pazymiai[pazymiu_kiekis / 2];//Pradedama nuo 0 skaiciuoti
+} 
+
+else{
+    mediana = (laikinas.pazymiai[pazymiu_kiekis/2] + laikinas.pazymiai[pazymiu_kiekis/2 - 1 ]) / 2.0;
+}
+
 
     return 0;
 }
