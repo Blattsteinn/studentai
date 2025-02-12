@@ -43,8 +43,8 @@ int main() {
         laikinas.pazymiai.clear();
         float sum = 0;
         
-        // cout << "Vardas: ";   cin >> laikinas.vardas;
-        // cout << "Pavarde: ";  cin >> laikinas.pavarde;
+         cout << "Vardas: ";   cin >> laikinas.vardas;
+         cout << "Pavarde: ";  cin >> laikinas.pavarde;
 
 //------------------------------- Pazymiu ivedimas --------------------------------------------------------------------------------------------
         float ivertinimas;
