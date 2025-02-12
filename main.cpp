@@ -54,7 +54,7 @@ int main() {
        } 
        float vidurkis; //Pazymiu vidurkis
        vidurkis = sum/n;
-       
+
 //------------------------------- Rikiavimas nuo maziausio iki didziausio ir medianos skaiciavimas ----------------------------------------------
 sort(laikinas.pazymiai.begin(), laikinas.pazymiai.end());
 
@@ -69,5 +69,30 @@ else{
 }
 
 
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+        cout << "Egzamino rezultatas: "; cin >> laikinas.egzaminoRezultatas;
+
+        laikinas.galutinisVid = vidurkis * 0.4 + laikinas.egzaminoRezultatas *0.6;
+        laikinas.galutinisMed = mediana * 0.4 + laikinas.egzaminoRezultatas *0.6;
+
+        studentas.push_back(laikinas);
+    }
+
+    //---------------------
+    //Spausdinimas
+
+    cout << left << setw(12) << "Pavarde" 
+        << setw(12) << "Vardas" 
+        << setw(15) << "Galutinis (Vid.)  /  " 
+        << setw(15) << "Galutinis (Med.)" 
+        << "\n-------------------------------------------------\n";
+
+    for (auto& s : studentas) {
+        cout << left << setw(12) << s.pavarde
+            << setw(12) << s.vardas
+            << fixed << setprecision(2) << setw(22) << s.galutinisVid
+            << fixed << setprecision(2) << setw(15) << s.galutinisMed
+            << "\n";
+    }
     return 0;
 }
