@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <random>
+#include <string>
 #include <limits> // for std::numeric_limits
 
 using std::string;
