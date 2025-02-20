@@ -85,7 +85,6 @@ vector<float> ivestiPazymius(){
     return laikinas.pazymiai;
 }
 
-
 int main(){
 
     vector<Studentas> studentas;
@@ -103,7 +102,7 @@ int main(){
 5 - baigti darba
         [Pasirinkimas]: )";    
 
-        pasirinkimas = reiksmesTikrinimas(pradzios_tekstas, "[Klaida] iveskite skaiciu nuo 1-10", 1, 4);
+        pasirinkimas = reiksmesTikrinimas(pradzios_tekstas, "[Klaida] iveskite skaiciu nuo 1-10", 1, 5);
 
         laikinas.pazymiai.clear();
 
