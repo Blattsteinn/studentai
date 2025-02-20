@@ -95,12 +95,19 @@ int main(){
     int pasirinkimas{};
     while(true){ 
         
-        string pradzios_tekstas = "[Pasirinkimas] programos eiga (1 - ranka, 2 - generuoti pazymius, 3 - generuoti ir pazymius ir studentu vardus, pavardes, 4 - baigti darba): ";
+        string pradzios_tekstas = R"([Programos eigos pasirinkimas]
+1 - rankinis ivedimas, 
+2 - generuoti pazymius, 
+3 - generuoti ir pazymius, ir studentu vardus, pavardes, 
+4 - nuskaityti duomenis is failo, 
+5 - baigti darba
+        [Pasirinkimas]: )";    
+
         pasirinkimas = reiksmesTikrinimas(pradzios_tekstas, "[Klaida] iveskite skaiciu nuo 1-10", 1, 4);
 
         laikinas.pazymiai.clear();
 
-        if(pasirinkimas == 4) { break; } // Nutraukiamas programos darbas
+        if(pasirinkimas == 5) { break; } // Nutraukiamas programos darbas
         switch(pasirinkimas){
             case 1:   // 1 - ivedimas rankas
                 cout << "Vardas: ";   cin >> laikinas.vardas;
@@ -126,6 +133,9 @@ int main(){
                 laikinas.pazymiai = atsitiktinisPazymiai();
                 laikinas.egzaminoRezultatas = randomNumber(1, 10); cout << "Egzamino rezultatas: " << laikinas.egzaminoRezultatas << endl;
                 break;
+
+            case 4:
+                cout << "[Skaitymas is failo] ";
 
             default:
                 // programa neturetu pasiekti sios dalies
