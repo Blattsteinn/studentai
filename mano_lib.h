@@ -43,5 +43,5 @@ struct Studentas{
 // Prototipai
     string readFileToString();
     int wordCount(istringstream& iss);
-    vector<Studentas> read_student_records(int ndCount, istringstream& iss)
+    vector<Studentas> read_student_records(int ndCount, istringstream& iss);
 
