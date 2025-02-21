@@ -18,7 +18,7 @@ vector<float> atsitiktinisPazymiai(){
         if(testiGeneravima != 'n' && testiGeneravima != 'N'){ 
             int atsitiktinisPazymys = randomNumber(1, 10);
             laikinas.pazymiai.push_back(atsitiktinisPazymys);
-            cout << pazymiuSekimas << "pazymys: "  << atsitiktinisPazymys << endl; pazymiuSekimas++;
+            cout << pazymiuSekimas << " pazymys: "  << atsitiktinisPazymys << endl; pazymiuSekimas++;
             }
         else{
             break; 
@@ -62,7 +62,7 @@ int reiksmesTikrinimas(string zinute, string klaidosZinute,int minVal,int maxVal
     }
 }
 
-vector<float> ivestiPazymius(){
+vector<float> enter_grades_manually(){
     Studentas laikinas;
 
     float ivertinimas;
@@ -128,14 +128,43 @@ float mediana(Studentas laikinas){
     }
 }
 
+void spausdinimas(vector<Studentas> studentas){
+        cout << left << setw(12) << "Pavarde" 
+        << setw(12) << "Vardas" 
+        << setw(15) << "Galutinis (Vid.)  /  " 
+        << setw(15) << "Galutinis (Med.)" 
+        << "\n-------------------------------------------------\n";
+
+    for (auto& s : studentas) {
+        cout << left << setw(12) << s.pavarde
+            << setw(12) << s.vardas
+            << fixed << setprecision(2) << setw(22) << s.galutinisVid
+            << fixed << setprecision(2) << setw(15) << s.galutinisMed
+            << "\n";
+    }
+}
+
+
+/* --- Inserts a student into vector<Studentas>  ---   
+                              vector <Studentas> &student_target - vector, which we want to expand
+                              Studentas &studentas - information of the student, (Grades, exam score) */
+void insert_student(vector <Studentas> &student_target, Studentas &studentas){
+    Studentas laikinas = studentas; // Copy the student
+
+    laikinas.galutinisVid = vidurkis(laikinas) * 0.4 + laikinas.egzaminoRezultatas *0.6;
+    laikinas.galutinisMed = mediana(laikinas) * 0.4 + laikinas.egzaminoRezultatas *0.6;
+    student_target.push_back(laikinas);
+
+}
+
 
 int main(){
 
     vector<Studentas> studentas;
 
-    Studentas laikinas;
-
+    Studentas laikinas;   
     int pasirinkimas{};
+    
     while(true){ 
         
         string pradzios_tekstas = R"([Programos eigos pasirinkimas]
@@ -144,7 +173,7 @@ int main(){
 3 - generuoti ir pazymius, ir studentu vardus, pavardes, 
 4 - nuskaityti duomenis is failo, 
 5 - baigti darba
-        [Pasirinkimas]: )";    
+        [Pasirinkimas]: )";
 
         pasirinkimas = reiksmesTikrinimas(pradzios_tekstas, "[Klaida] iveskite skaiciu nuo 1-10", 1, 5);
 
@@ -156,8 +185,9 @@ int main(){
                 cout << "Pavarde: ";  cin >> laikinas.pavarde;
 
                     // --- Rankinis pazymiu ivedimas --- 
-                laikinas.pazymiai = ivestiPazymius();
+                laikinas.pazymiai = enter_grades_manually();
                 laikinas.egzaminoRezultatas = reiksmesTikrinimas("Egzamino ivertinimas: ", "[Klaida] iveskite skaiciu nuo 1-10", 1, 10);
+                insert_student(studentas, laikinas);
                 break;
 
             case 2:   // 2 - atsitiktinis pazymiu generavimas
@@ -167,6 +197,7 @@ int main(){
                     // --- Atsitiktinis pazymiu ivedimas --- 
                 laikinas.pazymiai = atsitiktinisPazymiai();
                 laikinas.egzaminoRezultatas = randomNumber(1, 10); cout << "Egzamino rezultatas: " << laikinas.egzaminoRezultatas << endl;
+                insert_student(studentas, laikinas);
                 break;
 
             case 3:   // 3 - generuoti ir pazymius ir studentu vardus, pavardes
@@ -174,6 +205,7 @@ int main(){
                 laikinas.pavarde = atsitiktinePavarde(); cout << "Sugeneruota pavarde: " << laikinas.pavarde << endl;
                 laikinas.pazymiai = atsitiktinisPazymiai();
                 laikinas.egzaminoRezultatas = randomNumber(1, 10); cout << "Egzamino rezultatas: " << laikinas.egzaminoRezultatas << endl;
+                insert_student(studentas, laikinas);
                 break;
 
             case 4: {                
@@ -190,7 +222,11 @@ int main(){
                 }
             
                 vector<Studentas> studentList = read_student_records(ndCount, iss);
-                cout << "Loaded " << studentList.size() << " records.\n";
+                for( auto student : studentList){
+                    laikinas.vardas = student.vardas;
+                    laikinas.pavarde = student.pavarde;
+                    insert_student(studentas, student);
+                }
                 
             }
         
@@ -199,31 +235,13 @@ int main(){
             break;
         }
 
-
-        // --- Vidurkio ir medianos skaiciavimas  ---  
-        laikinas.galutinisVid = vidurkis(laikinas) * 0.4 + laikinas.egzaminoRezultatas *0.6;
-        laikinas.galutinisMed = mediana(laikinas) * 0.4 + laikinas.egzaminoRezultatas *0.6;
-
-        studentas.push_back(laikinas);
-
         char choice;
         cout << "Ivestini kita studenta? y/n: "; cin >>  choice;
         if(choice == 'n' || choice == 'N'){ break; }
     }
 
     // --- Spausdinimas --- 
-    cout << left << setw(12) << "Pavarde" 
-        << setw(12) << "Vardas" 
-        << setw(15) << "Galutinis (Vid.)  /  " 
-        << setw(15) << "Galutinis (Med.)" 
-        << "\n-------------------------------------------------\n";
-
-    for (auto& s : studentas) {
-        cout << left << setw(12) << s.pavarde
-            << setw(12) << s.vardas
-            << fixed << setprecision(2) << setw(22) << s.galutinisVid
-            << fixed << setprecision(2) << setw(15) << s.galutinisMed
-            << "\n";
-    }
+    spausdinimas(studentas);
     return 0;
+
 }
