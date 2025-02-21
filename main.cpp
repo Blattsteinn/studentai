@@ -85,6 +85,50 @@ vector<float> ivestiPazymius(){
     return laikinas.pazymiai;
 }
 
+float vidurkis(Studentas laikinas){
+    float sum = 0;
+    float vidurkis = 0;
+
+    if(laikinas.pazymiai.size() != 0 ){ // Jei yra bent vienas ivertinimas apskaiciuojamas vidurki 
+        for(auto s : laikinas.pazymiai){
+            sum += s;
+        }   
+        vidurkis = sum/laikinas.pazymiai.size();
+        return vidurkis;
+    }
+    else { 
+        cout << "[Pazymiu nera] namu darbu tarpiniai rezultatai = 0" << endl; 
+        return 0;   
+    }
+    
+}
+
+float mediana(Studentas laikinas){
+
+    float mediana = 0; 
+        
+    if(laikinas.pazymiai.size() != 0 ){ // Jei yra bent vienas ivertinimas apskaiciuojama mediana
+        
+            sort(laikinas.pazymiai.begin(), laikinas.pazymiai.end()); // Duomenu issirikiavimas didejimo tvarka
+            int pazymiu_kiekis = laikinas.pazymiai.size();
+
+            if(pazymiu_kiekis % 2 == 1){ // Jeigu pazymiu skaicius yra nelyginis
+                mediana = laikinas.pazymiai[pazymiu_kiekis / 2];
+                return mediana;
+            } 
+
+            else{ // Jeigu pazymiu skaicius yra lyginis
+                mediana = (laikinas.pazymiai[pazymiu_kiekis/2] + laikinas.pazymiai[pazymiu_kiekis/2 - 1 ]) / 2.0;}
+                return mediana;
+            } 
+
+    else { 
+        cout << "[Pazymiu nera] namu darbu tarpiniai rezultatai = 0" << endl; 
+        return 0;   
+    }
+}
+
+
 int main(){
 
     vector<Studentas> studentas;
@@ -105,7 +149,6 @@ int main(){
         pasirinkimas = reiksmesTikrinimas(pradzios_tekstas, "[Klaida] iveskite skaiciu nuo 1-10", 1, 5);
 
         laikinas.pazymiai.clear();
-
         if(pasirinkimas == 5) { break; } // Nutraukiamas programos darbas
         switch(pasirinkimas){
             case 1:   // 1 - ivedimas rankas
@@ -133,39 +176,33 @@ int main(){
                 laikinas.egzaminoRezultatas = randomNumber(1, 10); cout << "Egzamino rezultatas: " << laikinas.egzaminoRezultatas << endl;
                 break;
 
-            case 4:
-                cout << "[Skaitymas is failo] ";
-
+            case 4: {                
+                string content = readFileToString();
+                if (content.empty() || content == "[ERROR]") {
+                    cerr << "Error reading file content. Exiting.\n";
+                }
+            
+                istringstream iss(content);  // Stream for parsing the file
+            
+                int ndCount = wordCount(iss);
+                if (ndCount < 0) { // Use a negative value to indicate error
+                    cerr << "Error: Header is invalid. Exiting.\n";
+                }
+            
+                vector<Studentas> studentList = read_student_records(ndCount, iss);
+                cout << "Loaded " << studentList.size() << " records.\n";
+                
+            }
+        
             default:
                 // programa neturetu pasiekti sios dalies
             break;
         }
 
 
-        // --- Vidurkio ir medianos skaiciavimas  --- 
-        float sum = 0;
-        float vidurkis = 0;
-        float mediana = 0; 
-        
-        if(laikinas.pazymiai.size() != 0 ){ // Jei yra bent vienas ivertinimas apskaiciuoja mediana/vidurki 
-            for(auto s : laikinas.pazymiai){
-                sum += s;
-            }   
-            vidurkis = sum/laikinas.pazymiai.size();
-
-            sort(laikinas.pazymiai.begin(), laikinas.pazymiai.end()); // Duomenu issirikiavimas didejimo tvarka
-
-            int pazymiu_kiekis = laikinas.pazymiai.size();
-            if(pazymiu_kiekis % 2 == 1){ // Jei skaicius nelyginis
-                mediana = laikinas.pazymiai[pazymiu_kiekis / 2];//Pradedama nuo 0 skaiciuoti
-                } 
-
-            else{ mediana = (laikinas.pazymiai[pazymiu_kiekis/2] + laikinas.pazymiai[pazymiu_kiekis/2 - 1 ]) / 2.0;} // Jei skaicius lyginis
-            } 
-        else { cout << "Pazymiu nera... namu darbu tarpiniai rezultatai = 0" << endl;}
-
-        laikinas.galutinisVid = vidurkis * 0.4 + laikinas.egzaminoRezultatas *0.6;
-        laikinas.galutinisMed = mediana * 0.4 + laikinas.egzaminoRezultatas *0.6;
+        // --- Vidurkio ir medianos skaiciavimas  ---  
+        laikinas.galutinisVid = vidurkis(laikinas) * 0.4 + laikinas.egzaminoRezultatas *0.6;
+        laikinas.galutinisMed = mediana(laikinas) * 0.4 + laikinas.egzaminoRezultatas *0.6;
 
         studentas.push_back(laikinas);
 
