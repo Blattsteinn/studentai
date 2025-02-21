@@ -85,7 +85,7 @@ vector<float> enter_grades_manually(){
     return laikinas.pazymiai;
 }
 
-float vidurkis(Studentas laikinas){
+float average(Studentas laikinas){
     float sum = 0;
     float vidurkis = 0;
 
@@ -103,7 +103,7 @@ float vidurkis(Studentas laikinas){
     
 }
 
-float mediana(Studentas laikinas){
+float median(Studentas laikinas){
 
     float mediana = 0; 
         
@@ -148,15 +148,48 @@ void spausdinimas(vector<Studentas> studentas){
 /* --- Inserts a student into vector<Studentas>  ---   
                               vector <Studentas> &student_target - vector, which we want to expand
                               Studentas &studentas - information of the student, (Grades, exam score) */
-void insert_student(vector <Studentas> &student_target, Studentas &studentas){
+void insert_student(vector <Studentas> &student_list, Studentas &studentas){
     Studentas laikinas = studentas; // Copy the student
 
-    laikinas.galutinisVid = vidurkis(laikinas) * 0.4 + laikinas.egzaminoRezultatas *0.6;
-    laikinas.galutinisMed = mediana(laikinas) * 0.4 + laikinas.egzaminoRezultatas *0.6;
-    student_target.push_back(laikinas);
+    laikinas.galutinisVid = average(laikinas) * 0.4 + laikinas.egzaminoRezultatas *0.6;
+    laikinas.galutinisMed = median(laikinas) * 0.4 + laikinas.egzaminoRezultatas *0.6;
+    student_list.push_back(laikinas);
 
 }
 
+/* --- Sorts students depending on user input  ---   
+                              vector <Studentas> &student_target - vector, which we want to sort */
+void sort_students(vector <Studentas> &student_list){
+    string rikiavimo_pasirinkimas = R"([Programos eigos pasirinkimas]
+    1 - sort students by name, 
+    2 - sort students by last name, 
+    3 - sort students by overall (mean)
+    4 - sort students by overall (median)
+            [Choice]: )";
+    
+    int choice = reiksmesTikrinimas(rikiavimo_pasirinkimas, "[Error] Choose a number between 1-4", 1, 4);
+
+    switch(choice){
+        case 1:
+           sort(student_list.begin(), student_list.end(), []( Studentas &a,  Studentas &b) {
+                return a.vardas > b.vardas; });
+            break;
+        case 2:
+            sort(student_list.begin(), student_list.end(), []( Studentas &a,  Studentas &b) {
+                return a.pavarde > b.pavarde; });
+            break;
+        case 3:
+            sort(student_list.begin(), student_list.end(), []( Studentas &a,  Studentas &b) {
+                return a.galutinisVid > b.galutinisVid; });
+            break;
+        case 4:
+            sort(student_list.begin(), student_list.end(), []( Studentas &a,  Studentas &b) {
+                return a.galutinisMed > b.galutinisMed; });
+            break;
+        default:
+        break;
+    }
+}
 
 int main(){
 
@@ -175,7 +208,7 @@ int main(){
 5 - baigti darba
         [Pasirinkimas]: )";
 
-        pasirinkimas = reiksmesTikrinimas(pradzios_tekstas, "[Klaida] iveskite skaiciu nuo 1-10", 1, 5);
+        pasirinkimas = reiksmesTikrinimas(pradzios_tekstas, "[Klaida] iveskite skaiciu nuo 1-5", 1, 5);
 
         laikinas.pazymiai.clear();
         if(pasirinkimas == 5) { break; } // Nutraukiamas programos darbas
@@ -211,14 +244,16 @@ int main(){
             case 4: {                
                 string content = readFileToString();
                 if (content.empty() || content == "[ERROR]") {
-                    cerr << "Error reading file content. Exiting.\n";
+                    cerr << "[Error] The file is empty or an error has occured. Exiting.\n";
+                    break;
                 }
             
                 istringstream iss(content);  // Stream for parsing the file
             
                 int ndCount = wordCount(iss);
-                if (ndCount < 0) { // Use a negative value to indicate error
-                    cerr << "Error: Header is invalid. Exiting.\n";
+                if (ndCount < 0) {
+                    cerr << "[Error] Header is invalid. Exiting.\n";
+                    break;
                 }
             
                 vector<Studentas> studentList = read_student_records(ndCount, iss);
@@ -231,7 +266,7 @@ int main(){
             }
         
             default:
-                // programa neturetu pasiekti sios dalies
+                // The program shouldn't reach this point
             break;
         }
 
@@ -240,8 +275,9 @@ int main(){
         if(choice == 'n' || choice == 'N'){ break; }
     }
 
-    // --- Spausdinimas --- 
+    sort_students(studentas);
     spausdinimas(studentas);
+
     return 0;
 
 }
