@@ -51,9 +51,8 @@ int wordCount(istringstream& iss){
     }
 
     // ND count is total number of words minus 3 (name, lastName & exam score)
-
     int ndCount = wordVector.size() - 3;
-    // cout << "Determined ND count from header: " << ndCount << "\n";  // <-- Testing
+    // cout << "ND count from header: " << ndCount << "\n";  // <-- Testing
 
     return ndCount;
 }
