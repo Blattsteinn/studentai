@@ -8,6 +8,7 @@
 #include <string>
 #include <limits> // for std::numeric_limits
 #include <fstream>
+#include <sstream> // for buffer
 
 using std::string;
 using std::cout;
