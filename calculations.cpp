@@ -38,7 +38,6 @@ float median(Studentas laikinas){
             } 
 
     else { 
-        cout << "[Pazymiu nera] namu darbu tarpiniai rezultatai = 0" << endl; 
         return 0;   
     }
 }
