@@ -75,25 +75,20 @@ int main(){
                 break;
 
             case 4: {                
-                string content = readFileToString();
-                if (content.empty() || content == "[ERROR]") {
-                    cerr << "[Error] The file is empty or an error has occured. Exiting.\n";
-                    break;
-                }
-            
-                istringstream iss(content);  // Stream for parsing the file
-            
-                int ndCount = wordCount(iss);
-                if (ndCount < 0) {
-                    cerr << "[Error] Header is invalid. Exiting.\n";
-                    break;
-                }
-            
-                vector<Studentas> studentList = read_student_records(ndCount, iss);
-                for( auto student : studentList){
-                    laikinas.vardas = student.vardas;
-                    laikinas.pavarde = student.pavarde;
-                    insert_student(studentas, student);
+                try {
+                    string content = readFileToString();
+                    istringstream iss(content);
+                    int ndCount = wordCount(iss);
+
+                    vector<Studentas> studentList = read_student_records(ndCount, iss);
+                    for( auto student : studentList){
+                        laikinas.vardas = student.vardas;
+                        laikinas.pavarde = student.pavarde;
+                        insert_student(studentas, student);
+                    }
+                
+                } catch (const char* msg) {
+                    cerr << msg << endl;
                 }
                 
             }
@@ -104,7 +99,7 @@ int main(){
         }
 
         char choice;
-        cout << "Ivestini kita studenta? y/n: "; cin >>  choice;
+        cout << "\nIvesti daugiau studentu? [y/n]: "; cin >>  choice; cout << '\n';
         if(choice == 'n' || choice == 'N'){ break; }
     }
 
