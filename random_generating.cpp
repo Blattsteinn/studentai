@@ -13,11 +13,11 @@ vector<float> random_grade(){
     int pazymiuSekimas = 1;  //Seka kiek vartotojas ivede pazymiu
 
     while(true){
-        cout << "Generate a new grade? [y/n]: "; cin >> testiGeneravima;
+        cout << "Generuoti nauja pazymi? [y/n]: "; cin >> testiGeneravima;
         if(testiGeneravima != 'n' && testiGeneravima != 'N'){ 
             int atsitiktinisPazymys = randomNumber(1, 10);
             laikinas.pazymiai.push_back(atsitiktinisPazymys);
-            cout << pazymiuSekimas << " generated grade: "  << atsitiktinisPazymys << endl; pazymiuSekimas++;
+            cout << pazymiuSekimas << " sugeneruotas ivertinimas: "  << atsitiktinisPazymys << endl; pazymiuSekimas++;
             }
         else{
             break; 
