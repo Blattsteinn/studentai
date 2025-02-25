@@ -129,19 +129,26 @@ float median(Studentas laikinas){
 }
 
 void spausdinimas(vector<Studentas> studentas){
-        cout << left << setw(12) << "Pavarde" 
+
+    // Create an output string stream
+    std::ostringstream buffer;
+
+        buffer << left << setw(12) << "Pavarde" 
         << setw(12) << "Vardas" 
         << setw(15) << "Galutinis (Vid.)  /  " 
         << setw(15) << "Galutinis (Med.)" 
-        << "\n-------------------------------------------------\n";
+        << "\n-------------------------------------------------------------\n";
 
     for (auto& s : studentas) {
-        cout << left << setw(12) << s.pavarde
+        buffer << left << setw(12) << s.pavarde
             << setw(12) << s.vardas
             << fixed << setprecision(2) << setw(22) << s.galutinisVid
             << fixed << setprecision(2) << setw(15) << s.galutinisMed
             << "\n";
     }
+
+    // Print the entire buffered content at once
+    cout << buffer.str();
 }
 
 
