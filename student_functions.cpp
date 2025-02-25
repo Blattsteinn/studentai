@@ -54,9 +54,14 @@ void print_students(vector<Studentas> studentas){
                               Studentas &studentas - information of the student, (Grades, exam score) */
 void insert_student(vector <Studentas> &student_list, Studentas &studentas){
     Studentas laikinas = studentas; // Copy the student
+    try {
+        laikinas.galutinisVid = average(laikinas) * 0.4 + laikinas.egzaminoRezultatas *0.6;
+        laikinas.galutinisMed = median(laikinas) * 0.4 + laikinas.egzaminoRezultatas *0.6;
+    } 
+    catch (const char* msg) {
+       cerr << msg << endl;
+    }
 
-    laikinas.galutinisVid = average(laikinas) * 0.4 + laikinas.egzaminoRezultatas *0.6;
-    laikinas.galutinisMed = median(laikinas) * 0.4 + laikinas.egzaminoRezultatas *0.6;
     student_list.push_back(laikinas);
 
 }
@@ -65,13 +70,13 @@ void insert_student(vector <Studentas> &student_list, Studentas &studentas){
                               vector <Studentas> &student_target - vector, which we want to sort */
 void sort_students(vector <Studentas> &student_list){
     string rikiavimo_pasirinkimas = R"([Programos eigos pasirinkimas]
-    1 - sort students by name, 
-    2 - sort students by last name, 
-    3 - sort students by overall (mean)
-    4 - sort students by overall (median)
-            [Choice]: )";
+    1 - rikiuoti pagal vardus (abeceliskai), 
+    2 - rikiuoti pagal pavardes (abeceliskai),
+    3 - rikiuoti pagal vidurki (didejant),
+    4 - rikiuoti pagal mediana (didejant),
+            [Pasirinkimas]: )";
     
-    int choice = reiksmesTikrinimas(rikiavimo_pasirinkimas, "[Error] Choose a number between 1-4", 1, 4);
+    int choice = reiksmesTikrinimas(rikiavimo_pasirinkimas, "[Klaida] Pasirinkite skaiciu tarp [1-4]", 1, 4);
 
     switch(choice){
         case 1:
