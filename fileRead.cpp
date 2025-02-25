@@ -5,8 +5,7 @@ string readFileToString(){
         // Open file in binary mode and position at the end to determine its size.
         ifstream file("kursiokai.txt", std::ios::binary | std::ios::ate);
         if (!file) {
-            cerr << "Error: Could not open file.\n";
-            return "[ERROR]";
+            throw "[Klaida] Failas neegzistuoja / neatsidaro.\n";
         }
     
         // Determine the file size.
@@ -18,8 +17,7 @@ string readFileToString(){
         // Read the entire file into a buffer.
         vector<char> bufferis(size);
         if (!file.read(bufferis.data(), size)) {
-            cerr << "[ERROR]: Could not read file.\n";
-            return "[ERROR]";
+            throw "[Klaida] Nepavyko nuskaityti failo.\n";
         }
         
         // Convert the buffer into a string for easier parsing.
@@ -46,7 +44,7 @@ int wordCount(istringstream& iss){
     
     // Ensure that the header has at least three words (name, lastName & exam score)
     if (wordVector.size() < 3) {
-        cerr << "[ERROR]: Invalid file header.\n";
+        throw "[Klaida] Neteisinga failo antraste.";
         return -1;
     }
 
@@ -65,6 +63,7 @@ vector<Studentas> read_student_records(int ndCount, istringstream& iss){
 
         
         vector<Studentas> records;
+        int line = 1;
         while (true) {
             Studentas r;
             if (!(iss >> r.vardas >> r.pavarde))
@@ -76,19 +75,21 @@ vector<Studentas> read_student_records(int ndCount, istringstream& iss){
             bool success = true;
             for (int i = 0; i < ndCount; i++) {
                 if (!(iss >> r.pazymiai[i])) {
-                    success = false;
-                    break;
+                    throw "[Klaida] Netinkamas duomenu failas!";
                 }
             }
             if (!success)
                 break;
             
             // Exam score.
-            if (!(iss >> r.egzaminoRezultatas))
-                break;
+            if (!(iss >> r.egzaminoRezultatas)){
+                throw "[Klaida] Netinkamas duomenu failas!";
+            }
+                
             
             // Add the record to the vector.
             records.push_back(r);
+            line++;
         }
         //Returns all the students & their information
         return records; 
