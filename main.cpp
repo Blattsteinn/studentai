@@ -1,45 +1,5 @@
 #include "mano_lib.h"
 
-
-int randomNumber(int a, int b) {
-    static std::mt19937 gen{std::random_device{}()}; // paleidziama tik karta
-    std::uniform_int_distribution<int> distr(a, b);
-    return distr(gen);
-}
-
-vector<float> atsitiktinisPazymiai(){
-    Studentas laikinas;
-
-    char testiGeneravima;
-    int pazymiuSekimas = 1;  //Seka kiek vartotojas ivede pazymiu
-
-    while(true){
-        cout << "Generuoti pazymi? y/n: "; cin >> testiGeneravima;
-        if(testiGeneravima != 'n' && testiGeneravima != 'N'){ 
-            int atsitiktinisPazymys = randomNumber(1, 10);
-            laikinas.pazymiai.push_back(atsitiktinisPazymys);
-            cout << pazymiuSekimas << " pazymys: "  << atsitiktinisPazymys << endl; pazymiuSekimas++;
-            }
-        else{
-            break; 
-        }               
-    }
-
-    return laikinas.pazymiai;
-}
-
-string atsitiktinisVardas() {
-    vector<string> vardai = {"John", "Alice", "Michael", "Emily", "David", "Sophia"};
-
-    return vardai[randomNumber(0, vardai.size()-1)];
-}
-
-string atsitiktinePavarde() {
-    vector<string> pavardes = {"Smith", "Johnson", "Brown", "Williams", "Jones", "Miller"};
-
-    return pavardes[randomNumber(0, pavardes.size()-1)];
-}
-
 int reiksmesTikrinimas(string zinute, string klaidosZinute,int minVal,int maxVal){
     while (true)
     {
@@ -85,49 +45,6 @@ vector<float> enter_grades_manually(){
     return laikinas.pazymiai;
 }
 
-float average(Studentas laikinas){
-    float sum = 0;
-    float vidurkis = 0;
-
-    if(laikinas.pazymiai.size() != 0 ){ // Jei yra bent vienas ivertinimas apskaiciuojamas vidurki 
-        for(auto s : laikinas.pazymiai){
-            sum += s;
-        }   
-        vidurkis = sum/laikinas.pazymiai.size();
-        return vidurkis;
-    }
-    else { 
-        cout << "[Pazymiu nera] namu darbu tarpiniai rezultatai = 0" << endl; 
-        return 0;   
-    }
-    
-}
-
-float median(Studentas laikinas){
-
-    float mediana = 0; 
-        
-    if(laikinas.pazymiai.size() != 0 ){ // Jei yra bent vienas ivertinimas apskaiciuojama mediana
-        
-            sort(laikinas.pazymiai.begin(), laikinas.pazymiai.end()); // Duomenu issirikiavimas didejimo tvarka
-            int pazymiu_kiekis = laikinas.pazymiai.size();
-
-            if(pazymiu_kiekis % 2 == 1){ // Jeigu pazymiu skaicius yra nelyginis
-                mediana = laikinas.pazymiai[pazymiu_kiekis / 2];
-                return mediana;
-            } 
-
-            else{ // Jeigu pazymiu skaicius yra lyginis
-                mediana = (laikinas.pazymiai[pazymiu_kiekis/2] + laikinas.pazymiai[pazymiu_kiekis/2 - 1 ]) / 2.0;}
-                return mediana;
-            } 
-
-    else { 
-        cout << "[Pazymiu nera] namu darbu tarpiniai rezultatai = 0" << endl; 
-        return 0;   
-    }
-}
-
 void spausdinimas(vector<Studentas> studentas){
 
     // Create an output string stream
@@ -151,7 +68,6 @@ void spausdinimas(vector<Studentas> studentas){
     // Print the entire buffered content at once
     cout << buffer.str();
 }
-
 
 /* --- Inserts a student into vector<Studentas>  ---   
                               vector <Studentas> &student_target - vector, which we want to expand
@@ -180,11 +96,11 @@ void sort_students(vector <Studentas> &student_list){
     switch(choice){
         case 1:
            sort(student_list.begin(), student_list.end(), []( Studentas &a,  Studentas &b) {
-                return a.vardas > b.vardas; });
+                return a.vardas < b.vardas; });
             break;
         case 2:
             sort(student_list.begin(), student_list.end(), []( Studentas &a,  Studentas &b) {
-                return a.pavarde > b.pavarde; });
+                return a.pavarde < b.pavarde; });
             break;
         case 3:
             sort(student_list.begin(), student_list.end(), []( Studentas &a,  Studentas &b) {
@@ -236,15 +152,15 @@ int main(){
                 cout << "Pavarde: ";  cin >> laikinas.pavarde;
 
                     // --- Atsitiktinis pazymiu ivedimas --- 
-                laikinas.pazymiai = atsitiktinisPazymiai();
+                laikinas.pazymiai = random_grade();
                 laikinas.egzaminoRezultatas = randomNumber(1, 10); cout << "Egzamino rezultatas: " << laikinas.egzaminoRezultatas << endl;
                 insert_student(studentas, laikinas);
                 break;
 
             case 3:   // 3 - generuoti ir pazymius ir studentu vardus, pavardes
-                laikinas.vardas = atsitiktinisVardas();  cout << "Sugeneruotas vardas: " << laikinas.vardas << endl;
-                laikinas.pavarde = atsitiktinePavarde(); cout << "Sugeneruota pavarde: " << laikinas.pavarde << endl;
-                laikinas.pazymiai = atsitiktinisPazymiai();
+                laikinas.vardas = random_name();  cout << "Sugeneruotas vardas: " << laikinas.vardas << endl;
+                laikinas.pavarde = random_last_name(); cout << "Sugeneruota pavarde: " << laikinas.pavarde << endl;
+                laikinas.pazymiai = random_grade();
                 laikinas.egzaminoRezultatas = randomNumber(1, 10); cout << "Egzamino rezultatas: " << laikinas.egzaminoRezultatas << endl;
                 insert_student(studentas, laikinas);
                 break;
