@@ -1,5 +1,6 @@
 #include "mano_lib.h"
 #include "my_functions.h"
+
 int reiksmesTikrinimas(string zinute, string klaidosZinute,int minVal,int maxVal);
 
 vector<float> enter_grades_manually(){
@@ -54,13 +55,9 @@ void print_students(vector<Studentas> studentas){
                               Studentas &studentas - information of the student, (Grades, exam score) */
 void insert_student(vector <Studentas> &student_list, Studentas &studentas){
     Studentas laikinas = studentas; // Copy the student
-    try {
-        laikinas.galutinisVid = average(laikinas) * 0.4 + laikinas.egzaminoRezultatas *0.6;
-        laikinas.galutinisMed = median(laikinas) * 0.4 + laikinas.egzaminoRezultatas *0.6;
-    } 
-    catch (const char* msg) {
-       cerr << msg << endl;
-    }
+
+    laikinas.galutinisVid = average(laikinas) * 0.4 + laikinas.egzaminoRezultatas *0.6;
+    laikinas.galutinisMed = median(laikinas) * 0.4 + laikinas.egzaminoRezultatas *0.6;
 
     student_list.push_back(laikinas);
 
