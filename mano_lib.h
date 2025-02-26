@@ -28,6 +28,9 @@ using std::ifstream;
 using std::istringstream;
 using std::cerr;
 
+#include <numeric>  // Required for std::accumulate
+using std::accumulate;
+
 struct Studentas{
 
     string vardas;
@@ -38,4 +41,13 @@ struct Studentas{
 
     float galutinisVid;
     float galutinisMed;
+
+    friend std::ostream& operator <<(std::ostream &out, Studentas &s){
+       out << left << setw(15) << s.pavarde
+            << setw(15) << s.vardas
+            << fixed << setprecision(2) << setw(22) << s.galutinisVid
+            << fixed << setprecision(2) << setw(15) << s.galutinisMed
+            << "\n";
+        return out;
+    }
 };

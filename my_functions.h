@@ -12,8 +12,10 @@
     float average(Studentas laikinas);
     float median(Studentas laikinas);
 
+    void calculate_everything(Studentas &laikinas);
+
 // fileRead.cpp
-    string readFileToString();
+    string readFileToString(string file_name);
     int wordCount(istringstream& iss);
     vector<Studentas> read_student_records(int ndCount, istringstream& iss);
 
@@ -23,3 +25,9 @@
     void print_students(vector<Studentas> studentas);
     void insert_student(vector <Studentas> &student_list, Studentas &studentas);
     void sort_students(vector <Studentas> &student_list);
+
+// aditional_functions.cpp
+    int check_the_value(string message, string errorMessage,int minVal,int maxVal);  // checks if a give value is within range
+    void print_to_file(vector<Studentas> list_of_students);
+    void testavimas(string file_name, vector <Studentas> &student_list);
+    string getPradziosTekstas();

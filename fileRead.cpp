@@ -1,9 +1,9 @@
 #include "mano_lib.h"
 
 // --- Reads the entire file into a string  ---
-string readFileToString(){
+string readFileToString(string file_name){
         // Open file in binary mode and position at the end to determine its size.
-        ifstream file("kursiokai.txt", std::ios::binary | std::ios::ate);
+        ifstream file(file_name, std::ios::binary | std::ios::ate);
         if (!file) {
             throw "[Klaida] Failas neegzistuoja / neatsidaro.\n";
         }

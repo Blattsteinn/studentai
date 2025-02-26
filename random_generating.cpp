@@ -6,25 +6,17 @@ int randomNumber(int a, int b) {
     return distr(gen);
 }
 
+// Generates random grades
 vector<float> random_grade(){
-    Studentas laikinas;
+    Studentas temp;
 
-    char testiGeneravima;
-    int pazymiuSekimas = 1;  //Seka kiek vartotojas ivede pazymiu
-
-    while(true){
-        cout << "Generuoti nauja pazymi? [y/n]: "; cin >> testiGeneravima;
-        if(testiGeneravima != 'n' && testiGeneravima != 'N'){ 
-            int atsitiktinisPazymys = randomNumber(1, 10);
-            laikinas.pazymiai.push_back(atsitiktinisPazymys);
-            cout << pazymiuSekimas << " sugeneruotas ivertinimas: "  << atsitiktinisPazymys << endl; pazymiuSekimas++;
-            }
-        else{
-            break; 
-        }               
+    int amount_to_generate = randomNumber(2,8);  // Generates a random number to determine how many grades the student will have
+    for(int i = 0; i< amount_to_generate; i++){
+        int random_generated_grade = randomNumber(1, 10);   // Generates a grade
+        temp.pazymiai.push_back(random_generated_grade);
     }
 
-    return laikinas.pazymiai;
+    return temp.pazymiai;
 }
 
 string random_name() {

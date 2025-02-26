@@ -9,9 +9,7 @@ float average(Studentas temp){
         return 0;
     }
 
-    for(auto s : temp.pazymiai){
-        sum += s;
-    }   
+    sum = accumulate(temp.pazymiai.begin(), temp.pazymiai.end(), 0);
 
     vidurkis = sum/temp.pazymiai.size();
     return vidurkis;
