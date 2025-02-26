@@ -1,41 +1,48 @@
 #include "mano_lib.h"
 
-float average(Studentas laikinas){
+float average(Studentas temp){
     float sum = 0;
     float vidurkis = 0;
 
-    if(laikinas.pazymiai.size() == 0 ) {
+    if(temp.pazymiai.size() == 0 ) {
         cout << "[Klaida] Negalima apskaiciuoti vidurkio, nes nera ivertinimu. Vidurkis - 0" << endl;
         return 0;
     }
 
-    for(auto s : laikinas.pazymiai){
+    for(auto s : temp.pazymiai){
         sum += s;
     }   
 
-    vidurkis = sum/laikinas.pazymiai.size();
+    vidurkis = sum/temp.pazymiai.size();
     return vidurkis;
 
 }
 
-float median(Studentas laikinas){
+float median(Studentas temp){
 
     float mediana = 0; 
-    if (laikinas.pazymiai.empty()) {
+    if (temp.pazymiai.empty()) {
         cout << "[Klaida] Negalima apskaiciuoti vidurkio, nes nera ivertinimu. Mediana - 0" << endl;
         return 0;
     }
 
-    sort(laikinas.pazymiai.begin(), laikinas.pazymiai.end()); // Duomenu issirikiavimas didejimo tvarka
-    int pazymiu_kiekis = laikinas.pazymiai.size();
+    sort(temp.pazymiai.begin(), temp.pazymiai.end()); // Duomenu issirikiavimas didejimo tvarka
+    int pazymiu_kiekis = temp.pazymiai.size();
 
     if(pazymiu_kiekis % 2 == 1){ // Jeigu pazymiu skaicius yra nelyginis
-        mediana = laikinas.pazymiai[pazymiu_kiekis / 2];
+        mediana = temp.pazymiai[pazymiu_kiekis / 2];
         return mediana;
     } 
 
     else{ // Jeigu pazymiu skaicius yra lyginis
-        mediana = (laikinas.pazymiai[pazymiu_kiekis/2] + laikinas.pazymiai[pazymiu_kiekis/2 - 1 ]) / 2.0;
+        mediana = (temp.pazymiai[pazymiu_kiekis/2] + temp.pazymiai[pazymiu_kiekis/2 - 1 ]) / 2.0;
         return mediana;
     }
+}
+
+void calculate_everything(Studentas &temp){
+
+    temp.galutinisVid = average(temp) * 0.4 + temp.egzaminoRezultatas *0.6;
+    temp.galutinisMed = median(temp) * 0.4 + temp.egzaminoRezultatas *0.6;
+
 }
