@@ -5,7 +5,8 @@ float average(Studentas laikinas){
     float vidurkis = 0;
 
     if(laikinas.pazymiai.size() == 0 ) {
-        throw std::runtime_error("[Klaida] pazymiu nera, tarpiniai rezultatai - 0.");
+        cout << "[Klaida] Negalima apskaiciuoti vidurkio, nera pazymiu. Ivertinimas - 0" << endl;
+        return 0;
     }
 
     for(auto s : laikinas.pazymiai){
@@ -21,7 +22,8 @@ float median(Studentas laikinas){
 
     float mediana = 0; 
     if (laikinas.pazymiai.empty()) {
-        throw std::runtime_error("[Klaida] Negalima apskaiciuoti medianos, nera pazymiu.");
+        cout << "[Klaida] Negalima apskaiciuoti vidurkio, nera pazymiu. Ivertinimas - 0" << endl;
+        return 0;
     }
 
     sort(laikinas.pazymiai.begin(), laikinas.pazymiai.end()); // Duomenu issirikiavimas didejimo tvarka
