@@ -5,7 +5,7 @@ float average(Studentas laikinas){
     float vidurkis = 0;
 
     if(laikinas.pazymiai.size() == 0 ) {
-        cout << "[Klaida] Negalima apskaiciuoti vidurkio, nera pazymiu. Ivertinimas - 0" << endl;
+        cout << "[Klaida] Negalima apskaiciuoti vidurkio, nes nera ivertinimu. Vidurkis - 0" << endl;
         return 0;
     }
 
@@ -22,7 +22,7 @@ float median(Studentas laikinas){
 
     float mediana = 0; 
     if (laikinas.pazymiai.empty()) {
-        cout << "[Klaida] Negalima apskaiciuoti vidurkio, nera pazymiu. Ivertinimas - 0" << endl;
+        cout << "[Klaida] Negalima apskaiciuoti vidurkio, nes nera ivertinimu. Mediana - 0" << endl;
         return 0;
     }
 
