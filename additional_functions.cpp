@@ -71,12 +71,13 @@ void testavimas(string file_name, vector <Studentas> &student_list){
 string getPradziosTekstas() {
     return R"(
         [Programos eigos pasirinkimas]
-    1 - rankinis ivedimas, 
-    2 - generuoti pazymius, 
-    3 - generuoti ir pazymius, ir studentu vardus, pavardes, 
-    4 - nuskaityti duomenis is failo, 
-    5 - baigti darba
+        
+1 - rankinis ivedimas, 
+2 - generuoti pazymius, 
+3 - generuoti ir pazymius, ir studentu vardus, pavardes, 
+4 - nuskaityti duomenis is failo, 
+5 - baigti darba
+[6 - testavimas]
 
-    6 - testavimas
             [Pasirinkimas]: )";
 }
