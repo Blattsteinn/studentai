@@ -21,8 +21,11 @@ void generate_files(){
 
         // Print names with fixed width, right-padded with spaces
         output << std::left << std::setw(25) << vardas
-                  << std::left << std::setw(27) << pavarde
-                  << std::endl;
+                  << std::left << std::setw(27) << pavarde;
+                  
+        for(int i = 0; i < nd_to_generate; i++){
+            output <<  std::left << std::setw(10) << randomNumber(1,10);
+        } output << endl;
     }
 
 
