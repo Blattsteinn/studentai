@@ -3,34 +3,41 @@
 
 string pradzios_tekstas = getPradziosTekstas();
 
-void generate_files(){
-    std::ofstream output("testavimoFailas.txt");
+#include <cmath>
+
+void generate_files(int student_size) {
+
+    int size = pow(10, student_size);
+    string file_name = "testavimasFailas" + std::to_string(size) + ".txt";
+    std::ofstream output(file_name);
 
     int nd_to_generate = randomNumber(5,9);
-    string header = "Vardas                   Pavarde                    ";
 
-    for(int i = 1; i <= nd_to_generate; i++){
-        header += "ND" + std::to_string(i) +  "       ";
-    } header += '\n';
+    std::ostringstream buffer;
+    buffer << std::left << std::setw(25) << "Vardas"
+        << std::left << std::setw(27) << "Pavarde";
 
-    output << header;
+    for (int i = 1; i <= nd_to_generate; i++) {
+        buffer << std::left << std::setw(10) << ("ND" + std::to_string(i));
+    } buffer << '\n';
 
-    for(int i = 1; i <= 10; i++){
+    for(int i = 1; i <= size; i++){
         string vardas = "VardasNr" + std::to_string(i);;
         string pavarde = "PavardeNr" + std::to_string(i);
 
-        // Print names with fixed width, right-padded with spaces
-        output << std::left << std::setw(25) << vardas
+        buffer << std::left << std::setw(25) << vardas
                   << std::left << std::setw(27) << pavarde;
                   
-        for(int i = 0; i < nd_to_generate; i++){
-            output <<  std::left << std::setw(10) << randomNumber(1,10);
-        } output << endl;
+        for (int j = 0; j < nd_to_generate; j++) {
+            buffer << std::left << std::setw(10) << randomNumber(1, 10);
+        } buffer << '\n';
     }
 
+    // Write any remaining data
+    output << buffer.str();
 
     output.close();
-
+    cout << "sukurtas " << file_name << " failas!" << endl;
 }
 
 int main(){
@@ -40,7 +47,9 @@ int main(){
 
     int program_choice{};
     
-    generate_files();
+
+    generate_files(3);  generate_files(4);  generate_files(5);  generate_files(6);   generate_files(7);              
+
 
     while(false){ 
         
@@ -141,7 +150,7 @@ int main(){
         }
     }
 
-    sort_students(list_of_students);
+    // sort_students(list_of_students);
 
     //print_students(list_of_students);
     print_to_file(list_of_students);
