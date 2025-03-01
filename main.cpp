@@ -3,6 +3,33 @@
 
 string pradzios_tekstas = getPradziosTekstas();
 
+void generate_files(){
+    std::ofstream output("testavimoFailas.txt");
+
+    int nd_to_generate = randomNumber(5,9);
+    string header = "Vardas                   Pavarde                    ";
+
+    for(int i = 1; i <= nd_to_generate; i++){
+        header += "ND" + std::to_string(i) +  "       ";
+    } header += '\n';
+
+    output << header;
+
+    for(int i = 1; i <= 10; i++){
+        string vardas = "VardasNr" + std::to_string(i);;
+        string pavarde = "PavardeNr" + std::to_string(i);
+
+        // Print names with fixed width, right-padded with spaces
+        output << std::left << std::setw(25) << vardas
+                  << std::left << std::setw(27) << pavarde
+                  << std::endl;
+    }
+
+
+    output.close();
+
+}
+
 int main(){
 
     vector<Studentas> list_of_students;
@@ -10,7 +37,9 @@ int main(){
 
     int program_choice{};
     
-    while(true){ 
+    generate_files();
+
+    while(false){ 
         
         program_choice = check_the_value(pradzios_tekstas, "[Klaida] iveskite skaiciu nuo 1-5", 1, 6);
         cout << endl;
@@ -111,7 +140,6 @@ int main(){
 
     sort_students(list_of_students);
 
-    
     //print_students(list_of_students);
     print_to_file(list_of_students);
 
