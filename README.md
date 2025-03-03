@@ -9,6 +9,7 @@ Example of a file:
 | Vardas  | Pavarde  | ND1  | ND2  | ... | NDn |
 |---------|---------|------|------|-----|-----|
 | vardasNr1|PavardeNr1|x|x|x|x|
+
 **Note:** `x` represents a randomly generated number between **1 and 10**.
 **Performance Consideration:**
  - The execution time depends on the value of **n**. 
