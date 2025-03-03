@@ -24,7 +24,7 @@ int check_the_value(string message, string errorMessage,int minVal,int maxVal){
     }
 }
 
-void print_to_file(vector<Studentas> list_of_students){
+void print_to_file(vector<Studentas> list_of_students, string file_name){
 
     // Create an output string stream
     std::ostringstream buffer;
@@ -36,17 +36,16 @@ void print_to_file(vector<Studentas> list_of_students){
         << setw(15) << "Galutinis (Med.)" 
         << "\n-------------------------------------------------------------\n";
 
-    std::ofstream isvedimas("isvedimas.txt");
+    std::ofstream isvedimas(file_name);
     for (auto& s : list_of_students) {
         buffer << s;   //Check struct Studentas for printing logic
 
     }
     isvedimas << buffer.str();
     isvedimas.close();
-    cout << "\n Studentu informacija issaugota faile isvedimas.txt" << endl;
 }
 
-void testavimas(string file_name, vector <Studentas> &student_list){
+void adding_from_file_logic(string file_name, vector <Studentas> &student_list){
     {   
         Studentas temp;
         try{

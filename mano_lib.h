@@ -9,6 +9,8 @@
 #include <limits> // for std::numeric_limits
 #include <fstream>
 #include <sstream> // for buffer
+#include <cmath>
+#include <chrono>
 
 using std::string;
 using std::cout;

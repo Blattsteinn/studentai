@@ -3,15 +3,14 @@
 
 string pradzios_tekstas = getPradziosTekstas();
 
-#include <cmath>
 
-void generate_files(int student_size) {
+void generate_files(int student_size) { // size = 10^student_size
 
     int size = pow(10, student_size);
     string file_name = "testavimasFailas" + std::to_string(size) + ".txt";
     std::ofstream output(file_name);
 
-    int nd_to_generate = randomNumber(5,9);
+    int nd_to_generate = randomNumber(5,12);
 
     std::ostringstream buffer;
     buffer << std::left << std::setw(25) << "Vardas"
@@ -40,17 +39,102 @@ void generate_files(int student_size) {
     cout << "sukurtas " << file_name << " failas!" << endl;
 }
 
+vector<Studentas> divide_students(vector <Studentas> &list_of_students, int choice){
+    // --- returns list of students whose final grade is below 5
+    vector <Studentas> students;
+
+    if(choice == 0) { 
+    for(auto student : list_of_students){
+        if (student.galutinisVid < 5){
+            students.push_back(student);
+        }
+    }
+    return students;
+    }
+
+    else if(choice == 1) { 
+        for(auto student : list_of_students){
+            if (student.galutinisVid >= 5){
+                students.push_back(student);
+            }
+        }
+        return students;
+    }
+
+}
+
+void testing(vector <Studentas> &list_of_students){
+    for(int i=3; i<=7; i++){
+
+        int file_size = pow(10, i);
+        string file_name = "testavimasFailas" + std::to_string(file_size) + ".txt";
+        string file_path = "C:\\Users\\arnas\\Documents\\Studentu failu archyvas\\" + file_name;
+
+        cout << "Testuojamas " << file_name << endl;
+        cout << endl;
+
+        // --- Nuskaitymas ---
+            auto start = std::chrono::high_resolution_clock::now();
+            adding_from_file_logic(file_path, list_of_students);
+            auto end = std::chrono::high_resolution_clock::now();
+
+            std::chrono::duration<double> reading_duration = end - start;
+            std::cout << "Reading execution time: " << reading_duration.count() << " seconds" << std::endl;
+
+        // --- Rusiavimas ---
+            start = std::chrono::high_resolution_clock::now();
+            sort_students(list_of_students, 3);
+            end = std::chrono::high_resolution_clock::now();
+
+            std::chrono::duration<double> sorting_duration = end - start;
+            std::cout << "Sorting execution time: " << sorting_duration.count() << " seconds" << std::endl;
+
+        // --- Skaidymas i dvi grupes ---
+            start = std::chrono::high_resolution_clock::now();
+             // -- Splits students between two groups
+            vector<Studentas> worse_students = divide_students(list_of_students, 0); 
+            vector<Studentas> good_students = divide_students(list_of_students, 1);
+
+            list_of_students.clear(); // Deletes initial vector
+
+            end = std::chrono::high_resolution_clock::now();
+            std::chrono::duration<double> dividing_groups_duration = end - start;
+            std::cout << "Dividing groups execution time: " << dividing_groups_duration.count() << " seconds" << std::endl;
+
+        // --- Studentai, kurių galutinis balas < 5.0 isrinkimas ir irasymas i nauja faila ---
+            start = std::chrono::high_resolution_clock::now();
+            print_to_file(worse_students, "rezultatasBad" + std::to_string(file_size) + ".txt");
+
+            end = std::chrono::high_resolution_clock::now();
+
+            std::chrono::duration<double> worse_group_duration = end - start;
+            std::cout << "Writing worse group to a file: " << worse_group_duration.count() << " seconds" << std::endl;
+
+        // --- Studentai, kurių galutinis balas >= 5.0 isrinkimas ir irasymas i nauja faila---
+            start = std::chrono::high_resolution_clock::now();
+            print_to_file(good_students, "rezultatasGood" + std::to_string(file_size) + ".txt");
+
+            end = std::chrono::high_resolution_clock::now();
+            
+            std::chrono::duration<double> good_group_duration = end - start;
+            std::cout << "Writing better group to a file: " << good_group_duration.count() << " seconds" << std::endl;
+
+        // bendras laikas
+        cout << endl;
+        cout << endl;
+    }
+}
+
+
 int main(){
 
     vector<Studentas> list_of_students;
     Studentas temp;   
 
+    testing(list_of_students);
+
     int program_choice{};
     
-
-    generate_files(3);  generate_files(4);  generate_files(5);  generate_files(6);   generate_files(7);              
-
-
     while(false){ 
         
         program_choice = check_the_value(pradzios_tekstas, "[Klaida] iveskite skaiciu nuo 1-5", 1, 6);
@@ -94,66 +178,27 @@ int main(){
                 break;
 
             case 4: {   // 4 - skaityti duomenu faila
-                try {
-                    string content = readFileToString("kursiokai.txt");   // "kursiokai.txt"
-                    istringstream iss(content);
-                    int ndCount = wordCount(iss);
+                adding_from_file_logic("kursiokai.txt", list_of_students);
+                cout << "Duomenys sekmingai nuskaityti is failo" << endl;
 
-                    vector<Studentas> studentList = read_student_records(ndCount, iss);
-                    for( auto student : studentList){
-                        temp.vardas = student.vardas;
-                        temp.pavarde = student.pavarde;
-
-                        calculate_everything(student);
-                        insert_student(list_of_students, student);
-                    }
-                
-                } catch (const char* msg) {
-                    cerr << msg << endl;
-                }
-                cout << "Duomenys nuskaityti is failo" << endl;
                 break;  
             }
 
-            case 6: {  
-                try {
-                    time_t start = time(nullptr);
-                    testavimas("C:\\Users\\arnas\\Documents\\studentai10000.txt", list_of_students);
-                    time_t end = time(nullptr);
-                    double a1 = end - start;           
-                    cout << "1 failas, sugaista: " << a1 << " sekundes." << endl;
-            
-                    start = time(nullptr);
-                    testavimas("C:\\Users\\arnas\\Documents\\studentai100000.txt", list_of_students);
-                    end = time(nullptr);
-                    double a2 = end - start;           
-                    cout << "2 failas, sugaista: " << a2 << " sekundes." << endl;
-            
-                    start = time(nullptr);
-                    testavimas("C:\\Users\\arnas\\Documents\\studentai1000000.txt", list_of_students);
-                    end = time(nullptr);
-                    double a3 = end - start;           
-                    cout << "3 failas, sugaista: " << a3 << " sekundes." << endl;
-            
-                    cout << "Vidutinis testavimo laikas: " << (a1 + a2 + a3) / 3 << " sekundes." << endl;
-            
-                } catch (const char* msg) {
-                    std::cerr << msg << std::endl;
-                }
-
-                break;
-            }
-            
             default:
                 // The program shouldn't reach this point
             break;
+
+            case 6: {
+
+             }
         }
     }
 
-    // sort_students(list_of_students);
 
+    // sort_students(list_of_students);
     //print_students(list_of_students);
-    print_to_file(list_of_students);
+
+    //print_to_file(list_of_students, "kursiokai.txt");
 
     return 0;
 

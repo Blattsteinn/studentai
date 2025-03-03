@@ -88,3 +88,27 @@ void sort_students(std::vector<Studentas> &student_list) {
             break;
     }
 }
+
+void sort_students(std::vector<Studentas> &student_list, int choice) {
+
+    switch (choice) {
+        case 1:
+            sort(student_list.begin(), student_list.end(),
+                      [](const Studentas &a, const Studentas &b) { return a.vardas < b.vardas; });
+            break;
+        case 2:
+            sort(student_list.begin(), student_list.end(),
+                      [](const Studentas &a, const Studentas &b) { return a.pavarde < b.pavarde; });
+            break;
+        case 3:
+            sort(student_list.begin(), student_list.end(),
+                      [](const Studentas &a, const Studentas &b) { return a.galutinisVid > b.galutinisVid; });
+            break;
+        case 4:
+            sort( student_list.begin(), student_list.end(),
+                      [](const Studentas &a, const Studentas &b) { return a.galutinisMed > b.galutinisMed; });
+            break;
+        default:
+            break;
+    }
+}
