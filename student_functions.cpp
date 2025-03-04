@@ -61,8 +61,8 @@ void sort_students(std::vector<Studentas> &student_list) {
     std::string rikiavimo_pasirinkimas = R"([Rikiavimo pasirinkimas]
     1 - rikiuoti pagal vardus (abeceliskai), 
     2 - rikiuoti pagal pavardes (abeceliskai),
-    3 - rikiuoti pagal vidurki (mazejant),
-    4 - rikiuoti pagal mediana (mazejant),
+    3 - rikiuoti pagal vidurki (didejant),
+    4 - rikiuoti pagal mediana (didejant),
             [Pasirinkimas]: )";
     
     int choice = check_the_value(rikiavimo_pasirinkimas, "[Klaida] Pasirinkite skaiciu tarp [1-4]", 1, 4);
@@ -78,11 +78,11 @@ void sort_students(std::vector<Studentas> &student_list) {
             break;
         case 3:
             sort(student_list.begin(), student_list.end(),
-                      [](const Studentas &a, const Studentas &b) { return a.galutinisVid > b.galutinisVid; });
+                      [](const Studentas &a, const Studentas &b) { return a.galutinisVid < b.galutinisVid; });
             break;
         case 4:
             sort( student_list.begin(), student_list.end(),
-                      [](const Studentas &a, const Studentas &b) { return a.galutinisMed > b.galutinisMed; });
+                      [](const Studentas &a, const Studentas &b) { return a.galutinisMed < b.galutinisMed; });
             break;
         default:
             break;
@@ -102,11 +102,11 @@ void sort_students(std::vector<Studentas> &student_list, int choice) {
             break;
         case 3:
             sort(student_list.begin(), student_list.end(),
-                      [](const Studentas &a, const Studentas &b) { return a.galutinisVid > b.galutinisVid; });
+                      [](const Studentas &a, const Studentas &b) { return a.galutinisVid < b.galutinisVid; });
             break;
         case 4:
             sort( student_list.begin(), student_list.end(),
-                      [](const Studentas &a, const Studentas &b) { return a.galutinisMed > b.galutinisMed; });
+                      [](const Studentas &a, const Studentas &b) { return a.galutinisMed < b.galutinisMed; });
             break;
         default:
             break;

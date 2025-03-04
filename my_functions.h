@@ -18,7 +18,7 @@
     string readFileToString(string file_name);
     int wordCount(istringstream& iss);
     vector<Studentas> read_student_records(int ndCount, istringstream& iss);
-
+    void appendingVectorViaFile(string file_name, vector <Studentas> &student_list);
 
 //  student_functions.cpp
     vector<float> enter_grades_manually();
@@ -30,10 +30,9 @@
 // aditional_functions.cpp
     int check_the_value(string message, string errorMessage,int minVal,int maxVal);  // checks if a give value is within range
     void print_to_file(vector<Studentas> list_of_students, string file_name);
-    void adding_from_file_logic(string file_name, vector <Studentas> &student_list);
     string getPradziosTekstas();
 
 // testavimas.cpp
     void generate_files(int student_size);
     vector<Studentas> divide_students(vector <Studentas> &list_of_students, int choice);
-    void testing(vector <Studentas> &list_of_students);
+    void testing();

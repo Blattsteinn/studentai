@@ -39,7 +39,7 @@ void generate_files(int student_size) { // size = 10^student_size
 
         std::chrono::duration<double> reading_duration = end - start;
         cout << "Sukurtas " << file_name << " failas." << endl;
-        std::cout << "Faila sukurti uztruko: " << reading_duration.count() << std::endl;
+        std::cout << "Faila sukurti uztruko: " << reading_duration.count() << "s" << std::endl;
         cout << endl;
     // ----
 }
@@ -65,13 +65,17 @@ vector<Studentas> divide_students(vector <Studentas> &list_of_students, int choi
         }
         return students;
     }
-
+    return students;
 }
 
-void testing(vector <Studentas> &list_of_students){
+void testing(){
     for(int i=3; i<=7; i++){
+        auto overall_start = std::chrono::high_resolution_clock::now();
 
         int file_size = pow(10, i);
+        vector<Studentas> list_of_students;
+        list_of_students.reserve(file_size);
+        
         string file_name = "testavimasFailas" + std::to_string(file_size) + ".txt";
         string file_path = "C:\\Users\\arnas\\Documents\\Studentu failu archyvas\\" + file_name;
 
@@ -80,7 +84,7 @@ void testing(vector <Studentas> &list_of_students){
 
         // --- Nuskaitymas ---
             auto start = std::chrono::high_resolution_clock::now();
-            adding_from_file_logic(file_path, list_of_students);
+            appendingVectorViaFile(file_path, list_of_students);
             auto end = std::chrono::high_resolution_clock::now();
 
             std::chrono::duration<double> reading_duration = end - start;
@@ -96,9 +100,13 @@ void testing(vector <Studentas> &list_of_students){
 
         // --- Skaidymas i dvi grupes ---
             start = std::chrono::high_resolution_clock::now();
+
              // -- Splits students between two groups
             vector<Studentas> worse_students = divide_students(list_of_students, 0); 
             vector<Studentas> good_students = divide_students(list_of_students, 1);
+            if(worse_students.size() == 0 || good_students.size() == 0){
+                return;
+            }
 
             list_of_students.clear(); // Deletes initial vector
 
@@ -124,7 +132,12 @@ void testing(vector <Studentas> &list_of_students){
             std::chrono::duration<double> good_group_duration = end - start;
             std::cout << "Kietuoliu irasymas i faila laikas: " << good_group_duration.count() << "s" << std::endl;
 
-        // bendras laikas
+        // --- Bendras skaitymo laikas
+            auto overall_end = std::chrono::high_resolution_clock::now();
+
+            std::chrono::duration<double> overall = overall_end - overall_start;
+            std::cout << "Bendras skaitymo laikas: " << overall.count() << "s" << std::endl;
+
         cout << endl;
         cout << endl;
     }

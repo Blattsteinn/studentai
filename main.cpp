@@ -9,14 +9,13 @@ int main(){
     vector<Studentas> list_of_students;
     Studentas temp;   
 
-    // generate_files(3);
-    testing(list_of_students);
+    // testing();
 
     int program_choice{};
     
-    while(false){ 
+    while(true){ 
         
-        program_choice = check_the_value(pradzios_tekstas, "[Klaida] iveskite skaiciu nuo 1-5", 1, 6);
+        program_choice = check_the_value(pradzios_tekstas, "[Klaida] iveskite skaiciu nuo 1-5", 1, 5);
         cout << endl;
 
         temp.pazymiai.clear();
@@ -57,7 +56,7 @@ int main(){
                 break;
 
             case 4: {   // 4 - skaityti duomenu faila
-                adding_from_file_logic("kursiokai.txt", list_of_students);
+                appendingVectorViaFile("kursiokai.txt", list_of_students);
                 cout << "Duomenys sekmingai nuskaityti is failo" << endl;
 
                 break;  
@@ -67,17 +66,13 @@ int main(){
                 // The program shouldn't reach this point
             break;
 
-            case 6: {
-
-             }
         }
     }
 
 
-    //sort_students(list_of_students);
+    sort_students(list_of_students);
     //print_students(list_of_students);
-
-    //print_to_file(list_of_students, "kursiokai.txt");
+    print_to_file(list_of_students, "rezultatai.txt");
 
     return 0;
 
