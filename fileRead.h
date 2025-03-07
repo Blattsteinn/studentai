@@ -75,10 +75,13 @@ Container<Studentas> read_student_records(int ndCount, istringstream& iss){
     
             bool success = true;
             for (int i = 0; i < ndCount; i++) {
-                if (!(iss >> r.pazymiai[i])) {
+                float grade;
+                if (!(iss >> grade)) {
                     throw "[Klaida] Netinkamas duomenu failas!";
                 }
+                r.pazymiai.push_back(grade);
             }
+                        
             if (!success)
                 break;
             

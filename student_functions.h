@@ -91,6 +91,38 @@ void sort_students(Container &student_list) {
     }
 }
 
+// Template specialization for std::list<Studentas>, since std::list doesn't support .sort() as std::vector or std::list
+template <>
+inline void sort_students<std::list<Studentas>>(std::list<Studentas> &student_list) {
+
+    std::string rikiavimo_pasirinkimas = R"([Rikiavimo pasirinkimas]
+    1 - rikiuoti pagal vardus (abeceliskai), 
+    2 - rikiuoti pagal pavardes (abeceliskai),
+    3 - rikiuoti pagal vidurki (didejant),
+    4 - rikiuoti pagal mediana (didejant),
+            [Pasirinkimas]: )";
+    
+    int choice = check_the_value(rikiavimo_pasirinkimas, "[Klaida] Pasirinkite skaiciu tarp [1-4]", 1, 4);
+    
+    switch (choice) {
+        case 1:
+            student_list.sort([](const Studentas &a, const Studentas &b) { return a.vardas < b.vardas; });
+            break;
+        case 2:
+            student_list.sort([](const Studentas &a, const Studentas &b) { return a.pavarde < b.pavarde; });
+            break;
+        case 3:
+            student_list.sort([](const Studentas &a, const Studentas &b) { return a.galutinisVid < b.galutinisVid; });
+            break;
+        case 4:
+            student_list.sort([](const Studentas &a, const Studentas &b) { return a.galutinisMed < b.galutinisMed; });
+            break;
+        default:
+            break;
+    }
+}
+
+
 // --- Sorts students depending on the function paramater ---
 template <typename Container>
 void sort_students(Container &student_list, int choice) {
