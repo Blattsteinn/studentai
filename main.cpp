@@ -1,24 +1,16 @@
-#include "mano_lib.h"
+#include "my_library.h"
 #include "my_functions.h"
-
-string pradzios_tekstas = getPradziosTekstas();
 
 int main(){
 
     StudentContainer<Studentas> list_of_students;
     Studentas temp;   
 
-    // testing<Container>();
-    //for(int i=3;i<=7; i++){
-      //  generate_files(i);
-    //}
-
-
     int program_choice{};
     
-    while(false){ 
+    while(true){ 
         
-        program_choice = check_the_value(pradzios_tekstas, "[Klaida] iveskite skaiciu nuo 1-5", 1, 5);
+        program_choice = check_the_value(consoleText_userChoice(), "[Klaida] iveskite skaiciu nuo 1-5", 1, 5);
         cout << endl;
 
         temp.pazymiai.clear();
@@ -49,9 +41,9 @@ int main(){
                 break;
 
             case 3:   // 3 - generuoti ir pazymius ir studentu vardus, pavardes
-                temp.vardas = random_name();  cout << "Sugeneruotas vardas: " << temp.vardas << endl;
-                temp.pavarde = random_last_name(); cout << "Sugeneruota pavarde: " << temp.pavarde << endl;
-                temp.pazymiai = random_grade();
+                temp.vardas = random_name<StudentContainer>();  cout << "Sugeneruotas vardas: " << temp.vardas << endl;
+                temp.pavarde = random_last_name<StudentContainer>(); cout << "Sugeneruota pavarde: " << temp.pavarde << endl;
+                temp.pazymiai = random_grade<StudentContainer>();
                 temp.egzaminoRezultatas = randomNumber(1, 10); cout << "Egzamino rezultatas: " << temp.egzaminoRezultatas << endl;
 
                 calculate_everything(temp);

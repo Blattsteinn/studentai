@@ -25,6 +25,7 @@
         cout << buffer.str();
     }
 
+
 // -- Outputs students into a .txt file (preferred way)
     template <template<typename, typename...> class Container>
     void print_to_file(Container<Studentas> list_of_students, string file_name){
@@ -56,6 +57,7 @@
         Studentas temp = student; // Copy the student
         student_list.push_back(temp);
     }
+
 
 // --- Manual user entry for grades ---
     template <template<typename, typename...> class Container>
@@ -145,7 +147,6 @@
             break;
     }
 }
-
 
 
 // ---------- Exact same functions as above just for for std::list ----------

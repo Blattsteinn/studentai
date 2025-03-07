@@ -17,10 +17,11 @@
         return temp.pazymiai;
     }
 
+    
 // --- Generates random name & last name
 
     template <template<typename, typename...> class Container>
-    std::string random_name() {
+    string random_name() {
         Container<std::string> vardai = {"John", "Alice", "Michael", "Emily", "David", "Sophia"};
         auto it = vardai.begin();
         std::advance(it, randomNumber(0, vardai.size() - 1));
@@ -28,7 +29,7 @@
     }
 
     template <template<typename, typename...> class Container>
-    std::string random_last_name() {
+    string random_last_name() {
         Container<std::string> vardai = {"Smith", "Johnson", "Brown", "Williams", "Jones", "Miller"};
         auto it = vardai.begin();
         std::advance(it, randomNumber(0, vardai.size() - 1));
