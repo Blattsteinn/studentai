@@ -2,19 +2,15 @@
 
 #include "mano_lib.h"
 
-template <typename T>
-using StudentContainer = std::deque<T>;
-
-
 // random_generating.cpp
     int randomNumber(int a, int b);
-    std::deque<float> random_grade();
+    StudentContainer<float> random_grade();
     string random_name();
     string random_last_name();
 
 //  calculations.cpp
     float average(Studentas laikinas);
-    float median(Studentas laikinas);
+    // float median(Studentas laikinas);
     void calculate_everything(Studentas &laikinas);
 
 // fileRead.cpp
@@ -42,8 +38,8 @@ using StudentContainer = std::deque<T>;
    // StudentContainer<Studentas> divide_students(StudentContainer <Studentas> &list_of_students, int choice);
    // void testing();
 
-
-   #include "fileRead.h"
+    #include "random_generating.h"
+    #include "fileRead.h"
     #include "student_functions.h"
     #include "additional_functions.h"
     #include "testavimas.h"

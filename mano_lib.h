@@ -1,11 +1,13 @@
 #pragma once
 
-#include <iostream>
-
 #include <vector>
 #include <list>
 #include <deque>
 
+template <typename T>
+using StudentContainer = std::vector<T>;
+
+#include <iostream>
 #include <iomanip>
 #include <algorithm>
 #include <random>
@@ -42,7 +44,7 @@ struct Studentas{
     string vardas;
     string pavarde;
 
-    std::deque <float> pazymiai;
+    StudentContainer <float> pazymiai;
     int egzaminoRezultatas;
 
     float galutinisVid;

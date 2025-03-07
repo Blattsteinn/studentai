@@ -3,18 +3,15 @@
 
 string pradzios_tekstas = getPradziosTekstas();
 
-template <typename T>
-using Container = std::deque<T>;
-
 int main(){
 
-    Container<Studentas> list_of_students;
+    StudentContainer<Studentas> list_of_students;
     Studentas temp;   
 
     // testing<Container>();
-    for(int i=3;i<=7; i++){
-        generate_files(i);
-    }
+    //for(int i=3;i<=7; i++){
+      //  generate_files(i);
+    //}
 
 
     int program_choice{};
@@ -32,7 +29,7 @@ int main(){
                 cout << "Pavarde: ";  cin >> temp.pavarde;
 
                     // --- Rankinis pazymiu ivedimas --- 
-                temp.pazymiai = enter_grades_manually<Container>();
+                temp.pazymiai = enter_grades_manually<StudentContainer>();
                 temp.egzaminoRezultatas = check_the_value("Egzamino ivertinimas: ", "[Klaida] iveskite skaiciu nuo 1-10", 1, 10);
             
                 calculate_everything(temp);
@@ -44,7 +41,7 @@ int main(){
                 cout << "Vardas: ";   cin >> temp.vardas;
                 cout << "Pavarde: ";  cin >> temp.pavarde;
 
-                temp.pazymiai = random_grade();
+                temp.pazymiai = random_grade<StudentContainer>();
                 temp.egzaminoRezultatas = randomNumber(1, 10); cout << "Egzamino rezultatas: " << temp.egzaminoRezultatas << endl;
                 calculate_everything(temp);
                 insert_student(list_of_students, temp);
@@ -77,6 +74,7 @@ int main(){
 
 
     sort_students(list_of_students);
+
     //print_students(list_of_students);
     print_to_file(list_of_students, "rezultatai.txt");
 

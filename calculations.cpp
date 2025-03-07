@@ -17,32 +17,9 @@ float average(Studentas temp){
 
 }
 
-float median(Studentas temp){
-
-    float mediana = 0; 
-    if (temp.pazymiai.empty()) {
-        cout << "[Klaida] Negalima apskaiciuoti vidurkio, nes nera ivertinimu. Mediana - 0" << endl;
-        return 0;
-    }
-
-    sort(temp.pazymiai.begin(), temp.pazymiai.end()); // Duomenu issirikiavimas didejimo tvarka
-    int pazymiu_kiekis = temp.pazymiai.size();
-
-    if(pazymiu_kiekis % 2 == 1){ // Jeigu pazymiu skaicius yra nelyginis
-        mediana = temp.pazymiai[pazymiu_kiekis / 2];
-        return mediana;
-    } 
-
-    else{ // Jeigu pazymiu skaicius yra lyginis
-        mediana = (temp.pazymiai[pazymiu_kiekis/2] + temp.pazymiai[pazymiu_kiekis/2 - 1 ]) / 2.0;
-        return mediana;
-    }
-}
-
 void calculate_everything(Studentas &temp){
-
     temp.galutinisVid = average(temp) * 0.4 + temp.egzaminoRezultatas *0.6;
-    temp.galutinisMed = median(temp) * 0.4 + temp.egzaminoRezultatas *0.6;
+    temp.galutinisMed = median<StudentContainer>(temp) * 0.4 + temp.egzaminoRezultatas *0.6;
 
 }
 
@@ -124,4 +101,10 @@ void generate_files(int student_size) { // size = 10^student_size
         std::cout << "Faila sukurti uztruko: " << reading_duration.count() << "s" << std::endl;
         cout << endl;
     // ----
+}
+
+int randomNumber(int a, int b) {
+    static std::mt19937 gen{std::random_device{}()}; // paleidziama tik karta
+    std::uniform_int_distribution<int> distr(a, b);
+    return distr(gen);
 }
