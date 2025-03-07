@@ -90,7 +90,7 @@ void generate_files(int student_size) { // size = 10^student_size
     string file_name = "testavimasFailas" + std::to_string(size) + ".txt";
     std::ofstream output(file_name);
 
-    int nd_to_generate = randomNumber(5,12);
+    int nd_to_generate = 5;
 
     std::ostringstream buffer;
     buffer << std::left << std::setw(25) << "Vardas"

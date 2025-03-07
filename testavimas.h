@@ -36,8 +36,7 @@ void testing(){
 
         int file_size = pow(10, i);
         Container<Studentas> list_of_students;
-        list_of_students.reserve(file_size); //reseve 10^filesize
-        
+     
         string file_name = "testavimasFailas" + std::to_string(file_size) + ".txt";
         string file_path = "C:\\Users\\arnas\\Documents\\Studentu failu archyvas\\" + file_name;
 

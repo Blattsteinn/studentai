@@ -11,7 +11,10 @@ int main(){
     Container<Studentas> list_of_students;
     Studentas temp;   
 
-    testing<Container>();
+    // testing<Container>();
+    for(int i=3;i<=7; i++){
+        generate_files(i);
+    }
 
 
     int program_choice{};
