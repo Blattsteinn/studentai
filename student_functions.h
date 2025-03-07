@@ -1,36 +1,10 @@
+#pragma once
+
 #include "mano_lib.h"
 #include "my_functions.h"
 
-vector<float> enter_grades_manually(){
-    Studentas temp;
-
-    float grade;
-    int track_grades = 1;  //Seka kiek vartotojas ivede pazymiu
-
-    cout << "[Pazymiu ivedimas] ivedant -1 nutraukiamas darbas" << endl;
-    while(true){
-
-        string temp_text = std::to_string(track_grades) + " pazymys: ";
-            
-        grade = check_the_value(temp_text, "[Klaida] ivertinimo ribos nuo 1 iki 10", -1, 10);
-
-        if(grade == -1){ 
-            break; 
-        }
-        else if (grade == 0 ){ 
-            cout << "[Klaida] ivertinimo ribos nuo 1 iki 10" << endl; 
-            continue; 
-        }
-
-        track_grades++;
-        temp.pazymiai.push_back(grade);
-    }
-
-    return temp.pazymiai;
-
-}
-
-void print_students(vector<Studentas> studentas){
+template <typename Container>
+void print_students(Container &studentas){
 
     // Create an output string stream
     std::ostringstream buffer;
@@ -50,14 +24,42 @@ void print_students(vector<Studentas> studentas){
     cout << buffer.str();
 }
 
-// --- Inserts a student into vector<Studentas>  ---  
-void insert_student(vector <Studentas> &student_list, Studentas &student){
+// --- Inserts a student into container<Studentas>  ---
+template <typename Container>
+void insert_student(Container &student_list, Studentas &student){
     Studentas temp = student; // Copy the student
     student_list.push_back(temp);
 }
 
-// --- Sorts students depending on user input  ---   
-void sort_students(std::vector<Studentas> &student_list) {
+template <template<typename, typename...> class Container>
+Container<float> enter_grades_manually() {
+    Container<float> grades;  // <--- This is a container of floats
+    float grade;
+    int track_grades = 1;
+
+    std::cout << "[Pazymiu ivedimas] ivedant -1 nutraukiamas darbas" << std::endl;
+    while (true) {
+        std::string prompt = std::to_string(track_grades) + " pazymys: ";
+        grade = check_the_value(prompt, "[Klaida] ivertinimo ribos nuo 1 iki 10", -1, 10);
+
+        if (grade == -1) {
+            break;
+        } else if (grade == 0) {
+            std::cout << "[Klaida] ivertinimo ribos nuo 1 iki 10" << std::endl;
+            continue;
+        }
+
+        track_grades++;
+        grades.push_back(grade);
+    }
+
+    return grades;
+}
+
+
+// --- Sorts students depending on user input  ---
+template <typename Container>
+void sort_students(Container &student_list) {
     std::string rikiavimo_pasirinkimas = R"([Rikiavimo pasirinkimas]
     1 - rikiuoti pagal vardus (abeceliskai), 
     2 - rikiuoti pagal pavardes (abeceliskai),
@@ -89,7 +91,9 @@ void sort_students(std::vector<Studentas> &student_list) {
     }
 }
 
-void sort_students(std::vector<Studentas> &student_list, int choice) {
+// --- Sorts students depending on the function paramater ---
+template <typename Container>
+void sort_students(Container &student_list, int choice) {
 
     switch (choice) {
         case 1:
@@ -107,6 +111,29 @@ void sort_students(std::vector<Studentas> &student_list, int choice) {
         case 4:
             sort( student_list.begin(), student_list.end(),
                       [](const Studentas &a, const Studentas &b) { return a.galutinisMed < b.galutinisMed; });
+            break;
+        default:
+            break;
+    }
+}
+
+
+
+// Template specialization for std::list<Studentas>, since std::list doesn't support .sort() as std::vector or std::list
+template <>
+inline void sort_students<std::list<Studentas>>(std::list<Studentas> &student_list, int choice) {
+    switch (choice) {
+        case 1:
+            student_list.sort([](const Studentas &a, const Studentas &b) { return a.vardas < b.vardas; });
+            break;
+        case 2:
+            student_list.sort([](const Studentas &a, const Studentas &b) { return a.pavarde < b.pavarde; });
+            break;
+        case 3:
+            student_list.sort([](const Studentas &a, const Studentas &b) { return a.galutinisVid < b.galutinisVid; });
+            break;
+        case 4:
+            student_list.sort([](const Studentas &a, const Studentas &b) { return a.galutinisMed < b.galutinisMed; });
             break;
         default:
             break;

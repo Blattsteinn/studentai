@@ -1,7 +1,11 @@
 #pragma once
 
 #include <iostream>
+
 #include <vector>
+#include <list>
+#include <deque>
+
 #include <iomanip>
 #include <algorithm>
 #include <random>
@@ -38,7 +42,7 @@ struct Studentas{
     string vardas;
     string pavarde;
 
-    vector<float> pazymiai;
+    std::deque <float> pazymiai;
     int egzaminoRezultatas;
 
     float galutinisVid;

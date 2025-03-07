@@ -3,17 +3,20 @@
 
 string pradzios_tekstas = getPradziosTekstas();
 
+template <typename T>
+using Container = std::deque<T>;
 
 int main(){
 
-    vector<Studentas> list_of_students;
+    Container<Studentas> list_of_students;
     Studentas temp;   
 
-    // testing();
+    testing<Container>();
+
 
     int program_choice{};
     
-    while(true){ 
+    while(false){ 
         
         program_choice = check_the_value(pradzios_tekstas, "[Klaida] iveskite skaiciu nuo 1-5", 1, 5);
         cout << endl;
@@ -26,7 +29,7 @@ int main(){
                 cout << "Pavarde: ";  cin >> temp.pavarde;
 
                     // --- Rankinis pazymiu ivedimas --- 
-                temp.pazymiai = enter_grades_manually();
+                temp.pazymiai = enter_grades_manually<Container>();
                 temp.egzaminoRezultatas = check_the_value("Egzamino ivertinimas: ", "[Klaida] iveskite skaiciu nuo 1-10", 1, 10);
             
                 calculate_everything(temp);
@@ -56,7 +59,7 @@ int main(){
                 break;
 
             case 4: {   // 4 - skaityti duomenu faila
-                appendingVectorViaFile("kursiokai.txt", list_of_students);
+                appendingContainerViaFile("kursiokai.txt", list_of_students);
                 cout << "Duomenys sekmingai nuskaityti is failo" << endl;
 
                 break;  

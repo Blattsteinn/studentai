@@ -7,7 +7,7 @@ int randomNumber(int a, int b) {
 }
 
 // Generates random grades
-vector<float> random_grade(){
+std::deque<float> random_grade(){
     Studentas temp;
 
     int amount_to_generate = randomNumber(2,8);  // Generates a random number to determine how many grades the student will have
@@ -20,13 +20,13 @@ vector<float> random_grade(){
 }
 
 string random_name() {
-    vector<string> vardai = {"John", "Alice", "Michael", "Emily", "David", "Sophia"};
+    std::deque<string> vardai = {"John", "Alice", "Michael", "Emily", "David", "Sophia"};
 
     return vardai[randomNumber(0, vardai.size()-1)];
 }
 
 string random_last_name() {
-    vector<string> pavardes = {"Smith", "Johnson", "Brown", "Williams", "Jones", "Miller"};
+    std::deque<string> pavardes = {"Smith", "Johnson", "Brown", "Williams", "Jones", "Miller"};
 
     return pavardes[randomNumber(0, pavardes.size()-1)];
 }

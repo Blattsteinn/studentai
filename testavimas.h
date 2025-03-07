@@ -1,52 +1,12 @@
+#pragma once
+
 #include "mano_lib.h"
 #include "my_functions.h"
 
-void generate_files(int student_size) { // size = 10^student_size
-    auto start = std::chrono::high_resolution_clock::now();
-
-    int size = pow(10, student_size);
-    string file_name = "testavimasFailas" + std::to_string(size) + ".txt";
-    std::ofstream output(file_name);
-
-    int nd_to_generate = randomNumber(5,12);
-
-    std::ostringstream buffer;
-    buffer << std::left << std::setw(25) << "Vardas"
-        << std::left << std::setw(27) << "Pavarde";
-
-    for (int i = 1; i <= nd_to_generate; i++) {
-        buffer << std::left << std::setw(10) << ("ND" + std::to_string(i));
-    } buffer << '\n';
-
-    for(int i = 1; i <= size; i++){
-        string vardas = "VardasNr" + std::to_string(i);;
-        string pavarde = "PavardeNr" + std::to_string(i);
-
-        buffer << std::left << std::setw(25) << vardas
-                  << std::left << std::setw(27) << pavarde;
-                  
-        for (int j = 0; j < nd_to_generate; j++) {
-            buffer << std::left << std::setw(10) << randomNumber(1, 10);
-        } buffer << '\n';
-    }
-
-
-    output << buffer.str();
-    output.close();
-
-    // ----
-        auto end = std::chrono::high_resolution_clock::now();
-
-        std::chrono::duration<double> reading_duration = end - start;
-        cout << "Sukurtas " << file_name << " failas." << endl;
-        std::cout << "Faila sukurti uztruko: " << reading_duration.count() << "s" << std::endl;
-        cout << endl;
-    // ----
-}
-
-vector<Studentas> divide_students(vector <Studentas> &list_of_students, int choice){
+template <template<typename, typename... > class Container>
+Container<Studentas> divide_students(const Container <Studentas> &list_of_students, int choice){
     // --- returns list of students whose final grade is below 5
-    vector <Studentas> students;
+    Container <Studentas> students;
 
     if(choice == 0) { 
     for(auto student : list_of_students){
@@ -68,13 +28,15 @@ vector<Studentas> divide_students(vector <Studentas> &list_of_students, int choi
     return students;
 }
 
+
+template <template<typename, typename...> class Container>
 void testing(){
     for(int i=3; i<=7; i++){
         auto overall_start = std::chrono::high_resolution_clock::now();
 
         int file_size = pow(10, i);
-        vector<Studentas> list_of_students;
-        list_of_students.reserve(file_size);
+        Container<Studentas> list_of_students;
+        list_of_students.reserve(file_size); //reseve 10^filesize
         
         string file_name = "testavimasFailas" + std::to_string(file_size) + ".txt";
         string file_path = "C:\\Users\\arnas\\Documents\\Studentu failu archyvas\\" + file_name;
@@ -84,7 +46,7 @@ void testing(){
 
         // --- Nuskaitymas ---
             auto start = std::chrono::high_resolution_clock::now();
-            appendingVectorViaFile(file_path, list_of_students);
+            appendingContainerViaFile(file_path, list_of_students);
             auto end = std::chrono::high_resolution_clock::now();
 
             std::chrono::duration<double> reading_duration = end - start;
@@ -102,13 +64,13 @@ void testing(){
             start = std::chrono::high_resolution_clock::now();
 
              // -- Splits students between two groups
-            vector<Studentas> worse_students = divide_students(list_of_students, 0); 
-            vector<Studentas> good_students = divide_students(list_of_students, 1);
+            Container<Studentas> worse_students = divide_students(list_of_students, 0); 
+            Container<Studentas> good_students = divide_students(list_of_students, 1);
             if(worse_students.size() == 0 || good_students.size() == 0){
                 return;
             }
 
-            list_of_students.clear(); // Deletes initial vector
+            list_of_students.clear(); // Deletes initial container
 
             end = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> dividing_groups_duration = end - start;
