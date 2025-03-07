@@ -58,7 +58,6 @@ string getPradziosTekstas() {
             [Pasirinkimas]: )";
 }
 
-
 void generate_files(int student_size) { // size = 10^student_size
 
     auto start = std::chrono::high_resolution_clock::now();
