@@ -1,6 +1,6 @@
 #pragma once
 
-#include "mano_lib.h"
+#include "my_library.h"
 
 // random_generating.cpp
     int randomNumber(int a, int b);

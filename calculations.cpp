@@ -1,4 +1,4 @@
-#include "mano_lib.h"
+#include "my_library.h"
 #include "my_functions.h"
 
 float average(Studentas temp){

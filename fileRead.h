@@ -1,6 +1,6 @@
 #pragma once
 
-#include "mano_lib.h"
+#include "my_library.h"
 
 // --- Reads the entire file into a string in a universal way ---
 template <template<typename, typename...> class Container>
@@ -81,7 +81,7 @@ Container<Studentas> read_student_records(int ndCount, istringstream& iss){
                 }
                 r.pazymiai.push_back(grade);
             }
-                        
+
             if (!success)
                 break;
             

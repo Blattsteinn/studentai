@@ -1,6 +1,6 @@
 #pragma once
 
-#include "mano_lib.h"
+#include "my_library.h"
 #include "my_functions.h"
 
 // -- Outputs students into a console (generally avoid this function)

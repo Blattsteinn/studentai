@@ -1,36 +1,37 @@
 #pragma once
 
-#include "mano_lib.h"
+#include "my_library.h"
 #include "my_functions.h"
 
-template <template<typename, typename... > class Container>
-Container<Studentas> divide_students(const Container <Studentas> &list_of_students, int choice){
-    // --- returns list of students whose final grade is below 5
-    Container <Studentas> students;
+// --- Divides students into two groups & splits them to seperate containers ---
+    template <template<typename, typename... > class Container>
+    Container<Studentas> divide_students(const Container <Studentas> &list_of_students, int choice){
+        // --- returns list of students whose final grade is below 5
+        Container <Studentas> students;
 
-    if(choice == 0) { 
-    for(auto student : list_of_students){
-        if (student.galutinisVid < 5){
-            students.push_back(student);
-        }
-    }
-    return students;
-    }
-
-    else if(choice == 1) { 
+        if(choice == 0) { 
         for(auto student : list_of_students){
-            if (student.galutinisVid >= 5){
+            if (student.galutinisVid < 5){
                 students.push_back(student);
             }
         }
         return students;
+        }
+
+        else if(choice == 1) { 
+            for(auto student : list_of_students){
+                if (student.galutinisVid >= 5){
+                    students.push_back(student);
+                }
+            }
+            return students;
+        }
+        return students;
     }
-    return students;
-}
 
-
-template <template<typename, typename...> class Container>
-void testing(){
+// --- Testing function ---
+    template <template<typename, typename...> class Container>
+    void testing(){
     for(int i=3; i<=7; i++){
         auto overall_start = std::chrono::high_resolution_clock::now();
 
