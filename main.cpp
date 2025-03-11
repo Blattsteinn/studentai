@@ -8,9 +8,11 @@ int main(){
 
     int program_choice{};
     
+
+
     while(true){ 
         
-        program_choice = check_the_value(consoleText_userChoice(), "[Klaida] iveskite skaiciu nuo 1-5", 1, 5);
+        program_choice = check_the_value(consoleText_userChoice(), "[Klaida] iveskite skaiciu nuo 1-5", 1,7);
         cout << endl;
 
         temp.pazymiai.clear();
@@ -56,6 +58,18 @@ int main(){
 
                 break;  
             }
+
+            case 6: // Failu generavimas
+                for(int i = 3; i <= 7; i++){
+                    generate_files(i);
+                }
+                return 0;
+
+            case 7: // Nasumo testavimas
+                testing<StudentContainer>();
+
+                return 0;            
+
 
             default:
                 // The program shouldn't reach this point

@@ -4,29 +4,22 @@
 #include "my_functions.h"
 
 // --- Divides students into two groups & splits them to seperate containers ---
-    template <template<typename, typename... > class Container>
-    Container<Studentas> divide_students(const Container <Studentas> &list_of_students, int choice){
-        // --- returns list of students whose final grade is below 5
-        Container <Studentas> students;
-
-        if(choice == 0) { 
-        for(auto student : list_of_students){
-            if (student.galutinisVid < 5){
-                students.push_back(student);
-            }
+    template <template<typename, typename...> class Container>
+    Container<Studentas> divide_students(const Container<Studentas>& list_of_students, int choice) {
+        Container<Studentas> filtered;
+        
+        if(choice == 0) {
+            // Copy students with final grade below 5.
+            std::copy_if(list_of_students.begin(), list_of_students.end(),
+                        std::back_inserter(filtered),
+                        [](const Studentas &s) { return s.galutinisVid < 5; });
+        } else if(choice == 1) {
+            // Copy students with final grade 5 or above.
+            std::copy_if(list_of_students.begin(), list_of_students.end(),
+                        std::back_inserter(filtered),
+                        [](const Studentas &s) { return s.galutinisVid >= 5; });
         }
-        return students;
-        }
-
-        else if(choice == 1) { 
-            for(auto student : list_of_students){
-                if (student.galutinisVid >= 5){
-                    students.push_back(student);
-                }
-            }
-            return students;
-        }
-        return students;
+        return filtered;
     }
 
 // --- Testing function ---

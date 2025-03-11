@@ -10,10 +10,9 @@
 
     void calculate_everything(Studentas &laikinas);
 
-    void generate_files(int student_size);
 
     #include "random_generating.h"
-    #include "fileRead.h"
+    #include "file_functions.h"
     #include "student_functions.h"
     #include "additional_functions.h"
     #include "testavimas.h"

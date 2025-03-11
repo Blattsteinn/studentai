@@ -1,6 +1,0 @@
-
-Pavarde        Vardas         Galutinis (Vid.)  /  Galutinis (Med.)
--------------------------------------------------------------
-Brown          Sophia         5.28                  5.20           
-Jones          Alice          4.89                  4.20           
-Smith          Emily          3.00                  3.00           

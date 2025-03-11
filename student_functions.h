@@ -40,7 +40,8 @@
             << setw(15) << "Galutinis (Med.)" 
             << "\n-------------------------------------------------------------\n";
 
-        std::ofstream isvedimas(file_name);
+        string path = std::string("C:\\Users\\arnas\\Documents\\GitHub\\studentai\\rezultatai\\") + file_name;
+        ofstream isvedimas(path);
         for (auto& s : list_of_students) {
             buffer << s;   //Check struct Studentas for printing logic
 
