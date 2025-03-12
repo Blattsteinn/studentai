@@ -9,7 +9,6 @@ int main(){
     int program_choice{};
     
 
-
     while(true){ 
         
         program_choice = check_the_value(consoleText_userChoice(), "[Klaida] iveskite skaiciu nuo 1-5", 1,7);
@@ -66,7 +65,7 @@ int main(){
                 return 0;
 
             case 7: // Nasumo testavimas
-                testing<StudentContainer>();
+                // testing_1<StudentContainer>();
 
                 return 0;            
 

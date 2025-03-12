@@ -24,7 +24,7 @@
 
 // --- Testing function ---
     template <template<typename, typename...> class Container>
-    void testing(){
+    void testing_1(){
     for(int i=3; i<=7; i++){
         auto overall_start = std::chrono::high_resolution_clock::now();
 
@@ -97,3 +97,8 @@
         cout << endl;
     }
 }
+
+    template <template<typename, typename...> class Container>
+    void testing_2(){
+        
+    }

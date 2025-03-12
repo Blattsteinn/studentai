@@ -69,6 +69,8 @@ using std::uniform_int_distribution;
 using std::chrono::high_resolution_clock;
 using std::chrono::duration;
 
+#include <filesystem>
+
 // --- The Student Structure ---
 struct Studentas {
     string vardas;
