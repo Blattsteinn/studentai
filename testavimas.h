@@ -5,7 +5,35 @@
 
 // --- Divides students into two groups & splits them to seperate containers ---
     template <template<typename, typename...> class Container>
-    Container<Studentas> divide_students(const Container<Studentas>& list_of_students, int choice) {
+    Container<Studentas> divide_students_unoptimized(const Container<Studentas>& list_of_students, int choice) {
+
+        Container <Studentas> students;
+
+        // --- returns list of students whose final grade is below 5
+        if(choice == 0) { 
+        for(auto student : list_of_students){
+            if (student.galutinisVid < 5){
+                students.push_back(student);
+            }
+        }
+        return students;
+        }
+
+        // --- returns list of students whose final grade is above 5
+        else if(choice == 1) { 
+            for(auto student : list_of_students){
+                if (student.galutinisVid >= 5){
+                    students.push_back(student);
+                }
+            }
+            return students;
+        }
+        return students;
+    }
+
+    
+    template <template<typename, typename...> class Container>
+    Container<Studentas> divide_students_optimized(const Container<Studentas>& list_of_students, int choice) {
         Container<Studentas> filtered;
         
         if(choice == 0) {
@@ -97,8 +125,3 @@
         cout << endl;
     }
 }
-
-    template <template<typename, typename...> class Container>
-    void testing_2(){
-        
-    }

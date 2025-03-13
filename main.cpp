@@ -9,7 +9,7 @@ int main(){
     int program_choice{};
     
 
-    while(true){ 
+    while(false){ 
         
         program_choice = check_the_value(consoleText_userChoice(), "[Klaida] iveskite skaiciu nuo 1-5", 1,7);
         cout << endl;
@@ -78,10 +78,22 @@ int main(){
     }
 
 
-    sort_students(list_of_students);
+    //sort_students(list_of_students);
 
     //print_students(list_of_students);
-    print_to_file(list_of_students, "rezultatai.txt");
+    //print_to_file(list_of_students, "rezultatai.txt");
+
+    //cout << "Strategija 1. Neoptimizuotas skaidymas" << endl;
+    // strategy_1<StudentContainer>();
+
+    cout << "Strategija 2. Neoptimizuotas skaidymas tik i viena masyva" << endl;
+    strategy_2<StudentContainer>();
+
+// ----------
+    int a;
+    cout << "Laukimas...";
+    cin >> a;
+// ----------
 
     return 0;
 
