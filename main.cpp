@@ -65,7 +65,7 @@ int main(){
                 return 0;
 
             case 7: // Nasumo testavimas
-                // testing_1<StudentContainer>();
+                strategy_1<StudentContainer>();
 
                 return 0;            
 
