@@ -11,7 +11,7 @@ using std::list;
 using std::deque;
 
 template <typename T>
-using StudentContainer = list<T>;  // Can be changed to list<T> or deque<T> as needed.
+using StudentContainer = vector<T>;  // Can be changed to list<T> or deque<T> as needed.
 
 // --- I/O Streams ---
 #include <iostream>
