@@ -1,9 +1,10 @@
 
-## **Strategy 1.**
+# 1st strategy 
 This strategy involves splitting a container of students into two new containers of the same type: one for "good" students and one for "bad" students. 
 In this approach, the same student is stored in two containers making it memory inefficient, however the objective is to test program's performance with different containers (vector,list,deque).
 
-Full test results can be found here - [Test results.xlsx](https://github.com/user-attachments/files/19248834/Test.results.xlsx)
+Full test results can be found here - [Test results.xlsx](https://github.com/user-attachments/files/19250566/Test.results.xlsx)
+
 ### Deque average
 Memory inefficent, issues arises when working with large size
 | Size       | Read Avg (s) | Sort Avg (s) | Group Avg (s) | Total Avg (s) |
@@ -33,38 +34,22 @@ Best performance
 | 1,000,000  | 9.977394   | 0.5905198  | 2.034754   | 12.60358   |
 | 10,000,000 | 106.6492   | 13.05704   | 26.07286   | 145.78     |
 
-## **Strategy 2.**
-*description*
+# 2nd strategy
+This strategy involves splitting a student container using only one new container for "bad" students. In this approach, if a student is classified as a worse, we transfer them to the new  container and remove them from the main student container. After this step, only top students remain in the main container thus being more memory efficient.
 
-Grouping - 2nd strategy compared to 1st strategy (average)
+### Grouping Performance Comparison to 1st strategy (average results)
 
-### Deque
-Grouping with 2nd strategy is 2x faster
-| File       | Strategy 2 | Strategy 1 |
-|------------|------------|------------|
-| 1,000      | 0.00025062 | 0.00064116  |
-| 10,000     | 0.00310692 | 0.00517562  |
-| 100,000    | 0.02776866 | 0.06195668  |
-| 1,000,000  | 0.3512722  | 0.8973906   |
-| 10,000,000 | 29.29084   | 51.33604    |
+| File       | Deque (S2)  | Deque (S1)  |        | List (S2)  | List (S1)  |        | Vector (S2)  |
+|------------|------------|------------|--------|------------|------------|--------|------------|
+| 1,000      | 0.00025062 | 0.00064116  |        | 0.00020806 | 0.00058418  |        | 0.0025787  |
+| 10,000     | 0.00310692 | 0.00517562  |        | 0.00283066 | 0.00898998  |        | 0.257335   |
+| 100,000    | 0.02776866 | 0.06195668  |        | 0.04780796 | 0.165474    |        | 34.0452    |
+| 1,000,000  | 0.3512722  | 0.8973906   |        | 0.5217682  | 2.034754    |        | too long.. |
+| 10,000,000 | 29.29084   | 51.33604    |        | 7.631878   | 26.07286    |        | -          |
 
-### List
-Grouping with 2nd strategy is 4x faster 
-| File       | Strategy 2 | Strategy 1 |
-|------------|------------|------------|
-| 1,000      | 0.00020806 | 0.00058418  |
-| 10,000     | 0.00283066 | 0.00898998  |
-| 100,000    | 0.04780796 | 0.165474    |
-| 1,000,000  | 0.5217682  | 2.034754    |
-| 10,000,000 | 7.631878   | 26.07286    |
+**Key Takeaways:**
+- **Deque:** Strategy 2 is **2x faster** than Strategy 1.
+- **List:** Strategy 2 is **4x faster** than Strategy 1.
+- **Vector:** Becomes **unusable beyond 100,000 objects**.
 
-### Vector
-unsuable after 100,000 objects
-| File       | Grouping Time (s) |
-|------------|------------------|
-| 1,000      | 0.0025787        |
-| 10,000     | 0.257335         |
-| 100,000    | 34.0452          |
-| 1,000,000  | -                |
-| 10,000,000 | -                |
 
