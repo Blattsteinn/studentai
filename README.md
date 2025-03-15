@@ -1,77 +1,79 @@
 
-# Performance Test
+# Container Performance Comparison (Vector, List, Deque)
+This document analyzes how the choice of container (vector, list, deque) affects program performance when managing student data under different grouping strategies. Performance metrics considered include memory efficiency and execution time (reading, sorting, grouping).
 
-## Test  1 results
+Full test results can be found here - [Test results.xlsx](https://github.com/user-attachments/files/19260760/Test.results.xlsx)
 
-The function **`generate_files(int size)`** generates a file containing **10^size** students. Each student has **n** grades, where **n** is a randomly chosen number between **5 and 12**.
+System parameters: ....
 
-Example of a file:
-| Vardas  | Pavarde  | ND1  | ND2  | ... | NDn |
-|---------|---------|------|------|-----|-----|
-| vardasNr1|PavardeNr1|x|x|x|x|
+## 1st strategy 
+This strategy involves splitting a container of students into two new containers of the same type: one for "good" students and one for "bad" students. 
 
-**Note:** `x` represents a randomly generated number between **1 and 10**.
-**Performance Consideration:**
- - The execution time depends on the value of **n**. 
- - If n= 12, the file will take longer to generate compared to smaller values.
+In this approach, the same student is stored in two containers making it memory inefficient.
 
 
 
-### **Results of the test**
-| Record Count  | Generates in (s) - Test 1 | Generates in (s) - Test 2  | Generates in (s) - Test 3  | Average (s) |
-|--------------|----------------------------|----------------------------|----------------------------|-------------|
-| 1,000        | 0.00211                     | 0.0022902                   | 0.0022022                   | 0.002201    |
-| 10,000       | 0.01076                     | 0.0177911                   | 0.0149421                   | 0.014498    |
-| 100,000      | 0.16887                     | 0.13363                     | 0.127824                    | 0.143441    |
-| 1,000,000    | 1.41491                     | 1.61177                     | 1.29193                     | 1.439537    |
-| 10,000,000   | 14.8289                     | 14.6758                     | 8.42556                     | 12.64342    |
+## Results
 
-   
-## **Test 2 Results**
+**Deque average**
+Memory inefficient, has issues working with large sizes
+| Size       | Read Avg (s) | Sort Avg (s) | Group Avg (s) | Total Avg (s) |
+|------------|---------------------|---------------------|----------------------|---------------------|
+| 1,000      | 0.02844956          | 0.0005178           | 0.00064116           | 0.03019116          |
+| 10,000     | 0.10552896          | 0.00517462          | 0.00517562           | 0.1163678           |
+| 100,000    | 1.035632            | 0.07265532          | 0.06195668           | 1.171086            |
+| 1,000,000  | 10.623              | 0.9315776           | 0.8973906            | 12.45276            |
+| 10,000,000 | 192.141             | 16.55702            | 51.33604             | 260.4148            |
 
-The function `testing()` evaluates the efficiency of:
+**Vector average**
+| Size       | Read Avg (s) | Sort Avg (s) | Group Avg (s) | Total Avg (s) |
+|------------|------------|------------|------------|------------|
+| 1,000      | 0.010337   | 0.00009786 | 0.00017876 | 0.01092928 |
+| 10,000     | 0.09128952 | 0.00185314 | 0.00215056 | 0.09576322 |
+| 100,000    | 0.8871364  | 0.01464122 | 0.03292928 | 0.93549    |
+| 1,000,000  | 8.740884   | 0.186925   | 0.4305424  | 9.359252   |
+| 10,000,000 | 90.82808   | 1.769656   | 7.583668   | 100.18238  |
 
-1.  **Reading Data from Files**
-2.  **Sorting Students by Final Grade**
-3.  **Dividing Students into Two Groups**:
-    -   Students with a final grade < 5.0
-    -   Students with a final grade >= 5.0
-4.  **Writing Each Group to a Separate File**
+**List average**
+| Size       | Read Avg (s) | Sort Avg (s) | Group Avg (s) | Total Avg (s) |
+|------------|------------|------------|------------|------------|
+| 1,000      | 0.01216484 | 0.00008752 | 0.00058418 | 0.0132518  |
+| 10,000     | 0.0998488  | 0.00235064 | 0.00898998 | 0.1117702  |
+| 100,000    | 1.0053898  | 0.01892004 | 0.165474   | 1.190548   |
+| 1,000,000  | 9.977394   | 0.5905198  | 2.034754   | 12.60358   |
+| 10,000,000 | 106.6492   | 13.05704   | 26.07286   | 145.78     |
 
-### **Results of the test**
+## 2nd strategy
+This strategy involves splitting a student container using only one new container for "bad" students. In this approach, if a student is classified as a worse, we transfer them to the new  container and remove them from the main student container. After this step, only top students remain in the main container thus being more memory efficient.
 
-### Test 1 Results
-| Record Count | Read Time (s) | Sort Time (s) | Grouping Time (s) | Writing < 5.0 (s) | Writing >= 5.0 (s) | Total Execution Time (s) |
-|-------------|--------------|--------------|------------------|-----------------|-----------------|----------------------|
-| 1,000       | 0.0369855    | 0.0016286    | 0.0010679        | 0.0030207       | 0.0039994       | 0.04954              |
-| 10,000      | 0.222933     | 0.0131772    | 0.0095902        | 0.0384954       | 0.0191346       | 0.306494             |
-| 100,000     | 2.05531      | 0.128022     | 0.0744733        | 0.0570866       | 0.0777236       | 2.39554              |
-| 1,000,000   | 21.5831      | 2.67671      | 1.37884          | 0.830683        | 1.30552         | 27.7786              |
-| 10,000,000  | 227.48       | 23.5029      | 13.5443          | 5.4794          | 8.13665         | 278.147              |
+## Grouping Performance Compared to 1st strategy 
+(average results)
 
-### Test 2 Results
-| Record Count | Read Time (s) | Sort Time (s) | Grouping Time (s) | Writing < 5.0 (s) | Writing >= 5.0 (s) | Total Execution Time (s) |
-|-------------|--------------|--------------|------------------|-----------------|-----------------|----------------------|
-| 1,000       | 0.0223129    | 0.001026     | 0.0008577        | 0.0018272       | 0.0022887       | 0.0310523            |
-| 10,000      | 0.157833     | 0.0102557    | 0.007579         | 0.0366048       | 0.0171221       | 0.232215             |
-| 100,000     | 1.82201      | 0.13366      | 0.120614         | 0.0568328       | 0.0772286       | 2.21413              |
-| 1,000,000   | 15.1761      | 1.70457      | 0.96087          | 0.501588        | 0.724059        | 19.0704              |
-| 10,000,000  | 157.942      | 28.6962      | 18.0048          | 9.49007         | 14.1037         | 228.239              |
+| File       | Deque (S2)  | Deque (S1)  |        | List (S2)  | List (S1)  |        | Vector (S2)  |
+|------------|------------|------------|--------|------------|------------|--------|------------|
+| 1,000      | 0.00025062 | 0.00064116  |        | 0.00020806 | 0.00058418  |        | 0.0025787  |
+| 10,000     | 0.00310692 | 0.00517562  |        | 0.00283066 | 0.00898998  |        | 0.257335   |
+| 100,000    | 0.02776866 | 0.06195668  |        | 0.04780796 | 0.165474    |        | 34.0452    |
+| 1,000,000  | 0.3512722  | 0.8973906   |        | 0.5217682  | 2.034754    |        | too long.. |
+| 10,000,000 | 29.29084   | 51.33604    |        | 7.631878   | 26.07286    |        | -          |
 
-### Test 3 Results
-| Record Count | Read Time (s) | Sort Time (s) | Grouping Time (s) | Writing < 5.0 (s) | Writing >= 5.0 (s) | Total Execution Time (s) |
-|-------------|--------------|--------------|------------------|-----------------|-----------------|----------------------|
-| 1,000       | 0.0258991    | 0.0007809    | 0.0010866        | 0.0014599       | 0.0012698       | 0.0325156            |
-| 10,000      | 0.158078     | 0.0102177    | 0.0077227        | 0.0066185       | 0.0096825       | 0.195748             |
-| 100,000     | 1.83489      | 0.132387     | 0.125589         | 0.0734924       | 0.0995499       | 2.27035              |
-| 1,000,000   | 15.1279      | 1.75747      | 1.09657          | 0.533266        | 0.751264        | 19.2698              |
-| 10,000,000  | 154.162      | 20.5329      | 13.0608          | 5.50796         | 8.08777         | 201.355              |
+**Key Takeaways:**
+- **Deque:** Strategy 2 is **2x faster** than Strategy 1.
+- **List:** Strategy 2 is **4x faster** than Strategy 1.
+- **Vector:** Becomes **unusable beyond 100,000 objects**.
 
-### Average Results
-| Record Count | Read Time (s) | Sort Time (s) | Grouping Time (s) | Writing < 5.0 (s) | Writing >= 5.0 (s) | Total Execution Time (s) |
-|-------------|--------------|--------------|------------------|-----------------|-----------------|----------------------|
-| 1,000       | 0.028399167  | 0.001145167  | 0.001004067      | 0.0021026       | 0.0025193       | 0.037702633          |
-| 10,000      | 0.179614667  | 0.011216867  | 0.0082973        | 0.027239567     | 0.015313067     | 0.244819             |
-| 100,000     | 1.90407      | 0.131356333  | 0.1068921        | 0.0624706       | 0.084834033     | 2.29334              |
-| 1,000,000   | 17.2957      | 2.04625      | 1.145426667      | 0.621845667     | 0.926947667     | 22.0396              |
-| 10,000,000  | 179.8613333  | 24.244       | 14.86996667      | 6.82581         | 10.10937333     | 235.9136667          |
+## 3rd strategy
+This strategy tilizes efficient STL methods to optimize container handling when grouping students into two groups.
+
+
+
+## Grouping Performance Comparison to 1st & 2nd strategy
+ (average results)
+
+| File       | Deque (S3)  | Deque (S2)  | Deque (S1)  |   | Vector (S3)  | Vector (S2)  | Vector (S1)  |   | List (S3)   | List (S2)   | List (S1)   |
+|------------|------------|------------|------------|---|-------------|-------------|-------------|---|------------|------------|------------|
+| 1,000      | 0.00011425 | 0.00021374 | 0.00064116 |   | 0.0000599   | 0.0025787   | 0.00017876  |   | 0.00019066 | 0.00020806 | 0.00058418 |
+| 10,000     | 0.00287695 | 0.00316602 | 0.00517562 |   | 0.00112366  | 0.257335    | 0.00215056  |   | 0.00319796 | 0.00283066 | 0.00898998 |
+| 100,000    | 0.0266666  | 0.0273609  | 0.06195668 |   | 0.01488562  | 34.0452     | 0.03292928  |   | 0.0566572  | 0.04780796 | 0.165474   |
+| 1,000,000  | 0.2981615  | 0.3290822  | 0.8973906  |   | 0.1729368   | -           | 0.4305424   |   | 0.6462056  | 0.5217682  | 2.034754   |
+| 10,000,000 | 24.438075  | 28.11586   | 51.33604   |   | 3.128188    | -           | 7.583668    |   | 8.18736    | 7.631878   | 26.07286   |
