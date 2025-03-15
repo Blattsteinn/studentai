@@ -30,7 +30,7 @@ System parameters:
 
  You can change the container by opening my_library.h & editing the code. The default container is vector.
 
- - Average below is calculated using 5 test results
+ - Average is calculated using the results of 5 different tests
  - Testing using the same input files
 ## 1st strategy 
 This strategy involves splitting a container of students into two new containers of the same type: one for "good" students and one for "bad" students. 
@@ -40,7 +40,7 @@ In this approach, the same student is stored in two containers making it memory 
 
 
 ## Results
-**Deque average **
+**Deque average**
 Memory inefficient, has issues working with large sizes
 | Size       | Read Avg (s) | Sort Avg (s) | Group Avg (s) | Total Avg (s) |
 |------------|---------------------|---------------------|----------------------|---------------------|
@@ -88,7 +88,7 @@ This strategy involves splitting a student container using only one new containe
 - **Vector:** Becomes **unusable beyond 100,000 objects**.
 
 ## 3rd strategy
-This strategy utilizes efficient STL methods to optimize container handling when grouping students into two groups. (std::find_if, .assign(), .erase())
+Uses 2nd strategy, but also utilizes efficient STL methods to optimize container handling when grouping students into two groups. (std::find_if, .assign(), .erase())
 
 ## Grouping Performance Comparison to 1st & 2nd strategy
  (average results)
