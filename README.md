@@ -4,6 +4,8 @@ This document analyzes how the choice of container (vector, list, deque) affects
 
 Full test results can be found here - [Test results.xlsx](https://github.com/user-attachments/files/19260760/Test.results.xlsx)
 
+System parameters: ....
+
 ## 1st strategy 
 This strategy involves splitting a container of students into two new containers of the same type: one for "good" students and one for "bad" students. 
 
@@ -61,7 +63,9 @@ This strategy involves splitting a student container using only one new containe
 - **Vector:** Becomes **unusable beyond 100,000 objects**.
 
 ## 3rd strategy
-This strategy groups students using efficient container handling methods.
+This strategy tilizes efficient STL methods to optimize container handling when grouping students into two groups.
+
+
 
 ## Grouping Performance Comparison to 1st & 2nd strategy
  (average results)
