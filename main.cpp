@@ -7,7 +7,7 @@ int main(){
     Studentas temp;   
 
     int program_choice{};
-    
+    int strategy_choice{};
 
     while(true){ 
         
@@ -53,36 +53,49 @@ int main(){
 
             case 4: {   // 4 - skaityti duomenu faila
                 appendingContainerViaFile("kursiokai.txt", list_of_students);
-                cout << "Duomenys sekmingai nuskaityti is failo" << endl;
+                cout << "Duomenys sekmingai nuskaityti is failo." << endl;
 
                 break;  
             }
 
-            case 6: // Failu generavimas
+            case 6: // File generating
                 for(int i = 3; i <= 7; i++){
                     generate_files(i);
                 }
-                return 0;
+                break;
 
-            case 7: // Nasumo testavimas
-                strategy_1<StudentContainer>();
+            case 7: 
+                strategy_choice = check_the_value("Testavimo strategijos pasirinkimas (1,2 arba 3): ", "[Klaida] iveskite skaiciu nuo 1-3", 1,3);
+                switch(strategy_choice){
+                    case 1:
+                        strategy_1<StudentContainer>();
+                        break;
+                    case 2:
+                        strategy_1<StudentContainer>();
+                        break;
+                    case 3: 
+                        strategy_1<StudentContainer>();
+                        break;
+                    default: break;
+                }
+                
+                break;           
 
-                return 0;            
+            default: break;  // The program shouldn't reach this point
 
-
-            default:
-                // The program shouldn't reach this point
-            break;
 
         }
     }
 
+    if(list_of_students.size() != 0){
+        sort_students(list_of_students);
 
-    sort_students(list_of_students);
-
-    //print_students(list_of_students);
-    print_to_file(list_of_students, "rezultatai.txt");
+        //print_students(list_of_students);
+        print_to_file(list_of_students, "rezultatai.txt");
+    
+    } else {
+        cout << "Nieko ivesta nebuvo. Programa baigta.";
+    }
 
     return 0;
-
 }

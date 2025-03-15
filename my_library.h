@@ -33,6 +33,7 @@ using std::ostringstream;
 // --- String and Formatting ---
 #include <string>
 using std::string;
+using std::to_string;
 
 #include <iomanip>
 using std::setw;

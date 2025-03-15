@@ -25,33 +25,6 @@
         cout << buffer.str();
     }
 
-
-// -- Outputs students into a .txt file (preferred way)
-    template <template<typename, typename...> class Container>
-    void print_to_file(Container<Studentas> list_of_students, string file_name){
-
-        // Create an output string stream
-        std::ostringstream buffer;
-
-            buffer <<'\n' 
-            << left << setw(15) << "Pavarde" 
-            << setw(15) << "Vardas" 
-            << setw(15) << "Galutinis (Vid.)  /  " 
-            << setw(15) << "Galutinis (Med.)" 
-            << "\n-------------------------------------------------------------\n";
-
-        string path = std::string("C:\\Users\\arnas\\Documents\\GitHub\\studentai\\rezultatai\\") + file_name;
-        ofstream isvedimas(path);
-        for (auto& s : list_of_students) {
-            buffer << s;   //Check struct Studentas for printing logic
-
-        }
-        isvedimas << buffer.str();
-        isvedimas.close();
-
-    }
-
-
 // --- Inserts a student into container<Studentas>  ---
     template <typename Container>
     void insert_student(Container &student_list, Studentas &student){

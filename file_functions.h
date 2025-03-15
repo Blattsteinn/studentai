@@ -6,6 +6,9 @@ string readFileToString(const string &file_name);
 int wordCount(istringstream& iss);
 void generate_files(int student_size);
 
+namespace fs = std::filesystem;
+string create_folder(string folder_name);
+
 // --- Reads student records  ---   
     //  ndCount - instances of NDn in the file; &iss - stream of the file.
     //  Skips processing further records if any record is malformed.
@@ -63,4 +66,34 @@ void generate_files(int student_size);
                 cerr << msg << endl;
             }
         }
+    }
+
+    // -- Outputs students into a .txt file (preferred way)
+    template <template<typename, typename...> class Container>
+    void print_to_file(Container<Studentas> list_of_students, string file_name){
+
+        // Create an output string stream
+        std::ostringstream buffer;
+
+            buffer <<'\n' 
+            << left << setw(15) << "Pavarde" 
+            << setw(15) << "Vardas" 
+            << setw(15) << "Galutinis (Vid.)  /  " 
+            << setw(15) << "Galutinis (Med.)" 
+            << "\n-------------------------------------------------------------\n";
+
+        string folder_name = create_folder("Rezultatai");
+        fs::path full_path = fs::path(folder_name) / file_name;      // Combine folder and file name
+
+        ofstream isvedimas(full_path.string());
+        for (auto& s : list_of_students) {
+            buffer << s;   //Check struct Studentas for printing logic
+
+        }
+        isvedimas << buffer.str();
+        isvedimas.close();
+
+        cout << endl;
+        cout << "Rezultatai issaugoti: " << full_path.string() << '\n' << endl; 
+
     }

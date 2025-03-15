@@ -40,26 +40,6 @@
         return students;
     }
 
-    
-    template <template<typename, typename...> class Container>
-    Container<Studentas> divide_students_optimized(const Container<Studentas>& list_of_students, int choice) {
-        Container<Studentas> filtered;
-        
-        if(choice == 0) {
-            // Copy students with final grade below 5.
-            std::copy_if(list_of_students.begin(), list_of_students.end(),
-                        std::back_inserter(filtered),
-                        [](const Studentas &s) { return s.galutinisVid < 5; });
-        } else if(choice == 1) {
-            // Copy students with final grade 5 or above.
-            std::copy_if(list_of_students.begin(), list_of_students.end(),
-                        std::back_inserter(filtered),
-                        [](const Studentas &s) { return s.galutinisVid >= 5; });
-        }
-        return filtered;
-    }
-
-
 // --- Strategy 1 ---
 
     template <template<typename, typename...> class Container>
@@ -67,26 +47,29 @@
         for(int i=3; i<=7; i++){
 
             int file_size = pow(10, i);
-            Container<Studentas> list_of_students;
-        
-            string file_name = "testavimasFailas" + std::to_string(file_size) + ".txt";
-            string file_path = "C:\\Users\\arnas\\Documents\\Studentu failu archyvas\\" + file_name;
+            string file_name = "testavimasFailas" + to_string(file_size) + ".txt";
+            string folder_name = create_folder("Archive");  // Creates a folder
 
-            cout << "--------------------------- Testuojamas " << file_name << endl; cout << endl;
+            fs::path full_path = fs::path(folder_name) / file_name;      // Combine folder and file name
+
+            Container<Studentas> list_of_students;
+
+            cout << "--------------------------- Currently testing: " << file_name << endl; cout << endl;
             auto overall_start = std::chrono::high_resolution_clock::now();   /// <--- sparta pradedama skaiciuoti cia
             double readingTime;
 
             // --- Reading ---
-                readingTime = measureTime([&]() {
-                    appendingContainerViaFile(file_path, list_of_students);
-                });
-                    cout << "Reading time: " << readingTime << "s" << endl;
+            readingTime = measureTime([&]() {
+                appendingContainerViaFile(full_path.string(), list_of_students);
+            });
+                cout << "Reading time: " << readingTime << "s" << endl;
 
-            // --- Sorting ---
-                readingTime = measureTime([&]() {
-                    sort_students(list_of_students, 3);
-                });
-                    cout << "Sorting time: " << readingTime << "s" << endl;
+        // --- Sorting ---
+            readingTime = measureTime([&]() {
+                sort_students(list_of_students, 3);
+            });
+                cout << "Sorting time: " << readingTime << "s" << endl;
+
 
             
 
@@ -101,9 +84,6 @@
                     });
                         cout << "Grouping time: " << readingTime << "s" << endl;
 
-
-                list_of_students.clear(); // Deletes initial container
-
             // --- Bendras skaitymo laikas
 
                     auto overall_end = std::chrono::high_resolution_clock::now();
@@ -115,79 +95,110 @@
 
             worse_students.clear();
             good_students.clear();
+            list_of_students.clear();
+
         }
     }
 
 // --- Strategy 2 ---
 
-    template <template<typename, typename...> class Container>
+template <template<typename, typename...> class Container>
     void strategy_2(){
         for(int i=3; i<=7; i++){
 
             int file_size = pow(10, i);
+            string file_name = "testavimasFailas" + to_string(file_size) + ".txt";
+            string folder_name = create_folder("Archive");  // Creates a folder
+
+            fs::path full_path = fs::path(folder_name) / file_name;      // Combine folder and file name
+
             Container<Studentas> list_of_students;
-        
-            string file_name = "testavimasFailas" + std::to_string(file_size) + ".txt";
-            string file_path = "C:\\Users\\arnas\\Documents\\Studentu failu archyvas\\" + file_name;
-
-            cout << "--------------------------- Testuojamas " << file_name << endl; cout << endl;
-            auto overall_start = std::chrono::high_resolution_clock::now();   /// <--- sparta pradedama skaiciuoti cia
             double readingTime;
-
+            cout << "--------------------------- Currently testing: " << file_name << endl; cout << endl;
+            
             // --- Reading ---
                 readingTime = measureTime([&]() {
-                    appendingContainerViaFile(file_path, list_of_students);
+                    appendingContainerViaFile(full_path.string(), list_of_students);
                 });
-                    cout << "Reading time: " << readingTime << "s" << endl;
+                    cout << "Reading completed." << endl;
 
             // --- Sorting ---
                 readingTime = measureTime([&]() {
                     sort_students(list_of_students, 3);
                 });
-                    cout << "Sorting time: " << readingTime << "s" << endl;
+                    cout << "Sorting completed." << endl;
 
             
 
             // --- Splits students between two groups ---
-            // -- Creates a seperate container for worse students
 
             Container<Studentas> worse_students;
 
-                readingTime = measureTime([&]() {
-                    for(auto it = list_of_students.begin(); it != list_of_students.end(); ) {
-                        if (it->galutinisVid < 5) {
-                            worse_students.push_back(*it);
-                            it = list_of_students.erase(it); // erase returns the next valid iterator
-                        } else {
-                            ++it;
-                        }
+            readingTime = measureTime([&]() {
+                for(auto it = list_of_students.begin(); it != list_of_students.end(); ) {
+                    if (it->galutinisVid < 5) {
+                        worse_students.push_back(*it);
+                        it = list_of_students.erase(it); // erase returns the next valid iterator
+                    } else {
+                        ++it;
                     }
+                }
 
-                    });
-                    cout << "Grouping time: " << readingTime << "s" << endl;
-
-
-                list_of_students.clear(); // Deletes initial container
-
-            // --- Bendras skaitymo laikas
-
-                    auto overall_end = std::chrono::high_resolution_clock::now();
-                    std::chrono::duration<double> overall = overall_end - overall_start;
-                    std::cout << "Overall reading time: " << overall.count() << "s" << std::endl;
-
+                });
+                cout << "Grouping time: " << readingTime << "s" << endl;
+            
+            cout << "Finished!" << endl;
             cout << endl;
             cout << endl;
-
-            worse_students.clear();
-            good_students.clear();
         }
     }
-
 
 // --- Strategy 3 ---
 
     template <template<typename, typename...> class Container>
     void strategy_3(){
- 
-    
-}
+        for(int i=3; i<=7; i++){
+
+            int file_size = pow(10, i);
+            string file_name = "testavimasFailas" + to_string(file_size) + ".txt";
+            string folder_name = create_folder("Archive");  // Creates a folder
+
+            fs::path full_path = fs::path(folder_name) / file_name;      // Combine folder and file name
+
+            Container<Studentas> list_of_students;
+            double readingTime;
+            cout << "--------------------------- Currently testing: " << file_name << endl; cout << endl;
+            
+            // --- Reading ---
+                readingTime = measureTime([&]() {
+                    appendingContainerViaFile(full_path.string(), list_of_students);
+                });
+                    cout << "Reading completed." << endl;
+
+            // --- Sorting ---
+                readingTime = measureTime([&]() {
+                    sort_students(list_of_students, 3);
+                });
+                    cout << "Sorting completed." << endl;
+
+            
+
+            // --- Splits students between two groups ---
+
+            Container<Studentas> worse_students;
+
+            readingTime = measureTime([&]() {
+                auto it = std::find_if(list_of_students.begin(), list_of_students.end(),
+                [](const Studentas& s) { return s.galutinisVid >= 5.0; });
+                
+                    worse_students.assign(list_of_students.begin(), it);  // Copy failing students
+                    list_of_students.erase(list_of_students.begin(), it);   // Remove failing students
+            
+                });
+                cout << "Grouping time: " << readingTime << "s" << endl;
+            
+            cout << "Finished!" << endl;
+            cout << endl;
+            cout << endl;
+        }
+    }

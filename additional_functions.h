@@ -3,6 +3,8 @@
 #include "my_library.h"
 #include "my_functions.h"
 
+//---------------------- Median calculation
+
 // --- sort for std::vector & std::list
     template<typename Container>
     void sortGrades(Container& grades) {

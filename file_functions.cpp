@@ -40,26 +40,14 @@
     }
 
     void generate_files(int student_size) { // size = 10^student_size
-        auto start = std::chrono::high_resolution_clock::now();
     
         int size = pow(10, student_size);
-    
-            // ---------------------------------------------
-                namespace fs = std::filesystem;
-                fs::path folderPath = fs::current_path() / "sugeneruoti_failai";
-    
-            if (!fs::exists(folderPath)) {
-                    if (!fs::create_directories(folderPath)) {
-                        std::cerr << "[Klaida]: Nepavyko sukurti aplanko: " << folderPath << std::endl;
-                        return;
-                    }
-                }
-    
-                std::string file_name = "testavimasFailas" + std::to_string(size) + ".txt";
-                fs::path file_path = folderPath / file_name;
-            // ---------------------------------------------
-    
-        std::ofstream output(file_path);
+        string file_name = "testavimasFailas" + to_string(size) + ".txt";
+        string folder_name = create_folder("Generated Files");  // Creates a folder
+
+        fs::path full_path = fs::path(folder_name) / file_name;      // Combine folder and file name
+
+        std::ofstream output(full_path.string());
     
         
     
@@ -95,11 +83,23 @@
         output.close();
     
         // ----
-            auto end = std::chrono::high_resolution_clock::now();
-    
-            std::chrono::duration<double> reading_duration = end - start;
-            cout << student_size - 2 << ". Sukurtas " << file_name << " failas." << endl;
-            std::cout << "Faila sukurti uztruko: " << reading_duration.count() << "s" << std::endl;
+            cout << "Sukurtas naujas failas." << endl;
+            cout << "Failo vieta: " << full_path.string() << endl; 
             cout << endl;
         // ----
+    }
+
+
+    string create_folder(string folder_name) {
+        // Define the folder path relative to the current working directory.
+        fs::path folderPath = fs::current_path() / folder_name;
+    
+        // Create the folder if it does not exist.
+        if (!fs::exists(folderPath)) {
+            if (!fs::create_directories(folderPath)) {
+                std::cerr << "[Klaida]: Nepavyko sukurti aplanko: " << folderPath << std::endl;
+                return "";
+            }
+        }
+        return folderPath.string();
     }
