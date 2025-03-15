@@ -1,3 +1,15 @@
+# v1.0
+This program is a student grade management system that handles input, random data generation, and file-based operations for processing student records. It computes final grades using both average and median methods while offering functionalities for sorting, grouping, and performance testing.
+
+ ## Previous releases
+ - v.pradine-release - initial version, the program is able to take user's input, generate random grades & names and calculate the final score using mean/median.
+ - v0.1 - added additional .cpp file which uses C arrays instead of std::vector.
+ - v0.2 - Added sorting function, abiity to read .txt files and output results into a .txt file.
+ - v0.3 - Separated functions into multiple .cpp and .h files for better code organization. Implemented exception handling to catch errors related to file reading and user input validation.
+ - v0.4 - Added file generating & testing function that evaluates performance of reading data from files, sorting students to two different groups & writing each group to a separate file.
+ - v1.0-pre-release - the program supports 3 different containers depending on which we choose (vector, deque, list).
+
+   
 # Installation and Launch Instructions:
 
 - Install MinGW and CMake (version 3.25 or higher).
@@ -7,12 +19,19 @@
 
 
 # Container Performance Comparison (Vector, List, Deque)
-This document analyzes how the choice of container (vector, list, deque) affects program performance when managing student data under different grouping strategies. Performance metrics considered include memory efficiency and execution time (reading, sorting, grouping).
+This document analyzes how the choice of container (vector, list, deque)  affects program performance when managing student data under different grouping strategies. Performance metrics considered include memory efficiency and execution time (reading, sorting, grouping).
+
 
 Full test results can be found here - [Test results.xlsx](https://github.com/user-attachments/files/19260760/Test.results.xlsx)
 
-System parameters: ....
+System parameters: 
+- AMD Ryzen 7 8845HS w/ Radeon 780M Graphics   3.80 GHz (8 Cores & 16 threads 1)
+            8                        16
+- DDR5 16 GB
+- SSD 
 
+ You can change the container by opening my_library.h & editing the code. The default container is vector.
+ 
 ## 1st strategy 
 This strategy involves splitting a container of students into two new containers of the same type: one for "good" students and one for "bad" students. 
 
