@@ -31,7 +31,7 @@ System parameters:
  You can change the container by opening my_library.h & editing the code. The default container is vector.
 
  - Average is calculated using the results of 5 different tests
- - Testing using the same input files
+ - Testing uses the same input files
 ## 1st strategy 
 This strategy involves splitting a container of students into two new containers of the same type: one for "good" students and one for "bad" students. 
 
