@@ -6,8 +6,8 @@
 The function **`generate_files(int size)`** generates a file containing **10^size** students. Each student has **n** grades, where **n** is a randomly chosen number between **5 and 12**.
 
 Example of a file:
-| Vardas  | Pavarde  | ND1  | ND2  | ... | NDn |
-|---------|---------|------|------|-----|-----|
+| Vardas  | Pavarde  | ND1  | ND2  | ... | NDn | Exam |
+|---------|---------|------|------|-----|-----|-----|
 | vardasNr1|PavardeNr1|x|x|x|x|
 
 **Note:** `x` represents a randomly generated number between **1 and 10**.
