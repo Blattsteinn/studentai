@@ -25,6 +25,7 @@ Example of a file:
 | 1000000      | 0.99613                   | 1.091                     | 0.949079                  | 1.00176                   | 0.954632                  | 0.9985202   |
 | 10000000     | 10.6706                   | 10.5984                   | 10.1284                   | 9.82953                   | 9.58794                   | 10.1630     |
 
+![image](https://github.com/user-attachments/assets/c94957a1-dbc3-40a2-b5a0-dccad2ef5b7e)
    
 ## **Test 2 Results**
 
