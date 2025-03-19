@@ -99,3 +99,7 @@ The function `testing()` evaluates the efficiency of:
 | 1,000,000    | 10.545770     | 1.385284      | 0.980285          | 0.512301          | 0.732893           | 14.145430                |
 | 10,000,000   | 137.930600    | 16.587880     | 12.671340         | 4.759846          | 7.792712           | 180.280000               |
 
+![image](https://github.com/user-attachments/assets/14109881-4ab8-42cf-880c-492f094599ef)
+![image](https://github.com/user-attachments/assets/cea4b5db-d178-406f-981e-d20baf5bde4b)
+
+
