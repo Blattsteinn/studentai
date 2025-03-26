@@ -9,12 +9,12 @@ This program is a student grade management system that handles input, random dat
 - v0.4 – Integrated file generation and performance testing features that evaluate the efficiency of reading data, sorting students into groups, and writing each group to a separate file.
 - v1.0-pre-release – Enhanced the program to support three different container types (vector, deque, and list) based on user selection.
    
-# Installation and Launch Instructions (cross platform):
+# Installation and Launch Instructions:
 
-- Install MinGW and CMake (version 3.25 or higher).
+- Install [MinGW](http://www.mingw.org/) (or [MinGW-w64](https://mingw-w64.org/doku.php/download)) and [CMake (version 3.25 or higher)](https://cmake.org/download/).
 - Download the repository containing the above files.
-- Run run.bat to configure, build, install the program.
-- Launch the program (studentai)
+- Run `run.bat` to configure, build, and install the program.
+- Launch the program (`studentai`).
 
 # Container Performance Comparison (Vector, List, Deque)
 This analyzes how the choice of container (vector, list, deque)  affects program performance when managing student data under different grouping strategies. Performance metrics considered include memory efficiency and execution time (reading, sorting, grouping). The tests are conducted with varying file sizes, with 1,000; 10,000; 100,000; 1,000,000 & 10,000,000 students data.
